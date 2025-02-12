@@ -46,7 +46,7 @@ keith({
   }
 });
 
-/*keith({
+keith({
   nomCom: "gemini",
   aliases: ["gpto4", "gemni", "gpt2", "gpt3"],
   reaction: '⚔️',
