@@ -48,9 +48,9 @@ keith({
       text: aiResponse,
       contextInfo: {
         externalAdReply: {
-          title: "ALPHA-MD GPT4",
+          title: "DEEPSEEK AI TOOL",
           body: `Keep learning`,
-          thumbnailUrl: "https://files.catbox.moe/palnd8.jpg", // Replace with your bot profile photo URL
+          thumbnailUrl: "https://files.catbox.moe/elnwwy.png", // Replace with your bot profile photo URL
           sourceUrl: "https://whatsapp.com/channel/0029Vaan9TF9Bb62l8wpoD47", // Your channel URL
           mediaType: 1,
           showAdAttribution: true, // Verified badge
