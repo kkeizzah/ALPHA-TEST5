@@ -6,7 +6,7 @@ const conf = require(__dirname + '/../set');
 keith({
   nomCom: "screenshot",
   aliases: ["ss", "sshot"],
-  categorie: "AI",
+  categorie: "screenshots",
   reaction: "📽️"
 }, async (dest, zk, commandeOptions) => {
   const { repondre, ms, arg } = commandeOptions;
