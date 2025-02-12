@@ -1,6 +1,81 @@
 
 const cheerio = require('cheerio');
+const { keith } = require("../keizzah/keith");
+const { default: axios } = require("axios");
+const { mediafireDl } = require("../keizzah/dl/Function");
 
+keith({
+  nomCom: "scrap",
+  aliases: ["get", "find"],
+  categorie: "coding",
+  reaction: '🛄',
+}, async (sender, zk, context) => {
+  const { repondre: sendResponse, arg: args } = context;
+  const urlInput = args.join(" ");
+
+  // Check if URL starts with http:// or https://
+  if (!/^https?:\/\//.test(urlInput)) {
+    return sendResponse("Start the *URL* with http:// or https://");
+  }
+
+  try {
+    const url = new URL(urlInput);
+    const fetchUrl = `${url.origin}${url.pathname}?${url.searchParams.toString()}`;
+    
+    // Fetch the URL content
+    const response = await fetch(fetchUrl);
+
+    // Check if the response is okay
+    if (!response.ok) {
+      return sendResponse(`Failed to fetch the URL. Status: ${response.status} ${response.statusText}`);
+    }
+
+    const contentLength = response.headers.get('content-length');
+    if (contentLength && parseInt(contentLength) > 104857600) {
+      return sendResponse(`Content-Length exceeds the limit: ${contentLength}`);
+    }
+
+    const contentType = response.headers.get('content-type');
+    console.log('Content-Type:', contentType);
+
+    // Fetch the response as a buffer
+    const buffer = Buffer.from(await response.arrayBuffer());
+
+    // Handle different content types
+    if (/image\/.*/.test(contentType)) {
+      // Send image message
+      await zk.sendMessage(sender, {
+        image: { url: fetchUrl },
+        caption: "> > *ALPHA MD*"
+      }, { quoted: context.ms });
+    } else if (/video\/.*/.test(contentType)) {
+      // Send video message
+      await zk.sendMessage(sender, {
+        video: { url: fetchUrl },
+        caption: "> > *ALPHA MD*"
+      }, { quoted: context.ms });
+    } else if (/text|json/.test(contentType)) {
+      try {
+        // Try parsing the content as JSON
+        const json = JSON.parse(buffer);
+        console.log("Parsed JSON:", json);
+        sendResponse(JSON.stringify(json, null, 2).slice(0, 10000)); // Limit response size to 10000 characters
+      } catch {
+        // If parsing fails, send the raw text response
+        sendResponse(buffer.toString().slice(0, 10000)); // Limit response size to 10000 characters
+      }
+    } else {
+      // Send other types of documents
+      await zk.sendMessage(sender, {
+        document: { url: fetchUrl },
+        caption: "> > *ALPHA MD*"
+      }, { quoted: context.ms });
+    }
+  } catch (error) {
+    console.error("Error fetching data:", error.message);
+    sendResponse(`Error fetching data: ${error.message}`);
+  }
+});
 keith({
   nomCom: "web",
   aliases: ["inspectweb", "webinspect", "webscrap"],
