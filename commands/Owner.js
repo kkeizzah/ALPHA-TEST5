@@ -12,6 +12,39 @@ const fs = require('fs-extra');
 const moment = require("moment-timezone");
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
+keith({
+  nomCom: 'report',
+  aliases: 'spread',
+  categorie: "owner",
+  reaction: '⚪'
+}, async (bot, client, context) => {
+  const { arg, repondre, superUser, nomAuteurMessage } = context;
+
+  if (!arg[0]) {
+    return repondre("After the command *report*, type your message to be sent to the specified contacts.");
+  }
+
+  if (!superUser) {
+    return repondre("only for my owner");
+  }
+
+  // Specified contacts
+  const contacts = [
+    '254748387615@s.whatsapp.net',
+    '254110190196@s.whatsapp.net',
+    '254796299159@s.whatsapp.net'
+  ];
+
+  await repondre("*ALPHA-MD is reporting your message to developers contact💀*...");
+
+  const broadcastMessage = `*𝗥𝗘𝗣𝗢𝗥𝗧  𝗠𝗘𝗦𝗦𝗔𝗚𝗘*\n\n𝗠𝗲𝘀𝘀𝗮𝗴𝗲: ${arg.join(" ")}\n\n𝗦𝗲𝗻𝗱𝗲𝗿 𝗡𝗮𝗺𝗲: ${nomAuteurMessage}`;
+  for (let contact of contacts) {
+    await client.sendMessage(contact, {
+      image: { url: 'https://i.imgur.com/HDLN3If.jpeg' },
+      caption: broadcastMessage
+    });
+  }
+});
 
 keith({
   nomCom: "blocklist",
