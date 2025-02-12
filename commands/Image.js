@@ -2,7 +2,478 @@ const { keith } = require('../keizzah/keith');
 const gis = require('g-i-s');
 const axios = require('axios');
 const conf = require(__dirname + '/../set');
+keith({
+  nomCom: "sswidth",
+  categorie: "screenshots",
+  reaction: "📽️"
+}, async (dest, zk, commandeOptions) => {
+  const { repondre, ms, arg } = commandeOptions;
 
+  try {
+    // Caption for the screenshot
+    const cap = `*Screenshot by Alpha Md*`;
+
+    // Check if a URL is provided
+    if (!arg[0]) {
+      return repondre('Please insert a website link to take a screenshot!');
+    }
+
+    // Construct the screenshot URL
+    const image = `https://image.thum.io/get/width/${arg[0]}`;
+
+    // Send the screenshot image with the caption
+    await zk.sendMessage(dest, {
+      image: { url: image },
+      caption: cap
+    }, { quoted: ms });
+
+  } catch (error) {
+    // Log the error and notify the user with a formatted error message
+    console.error(error);
+    repondre(`An error occurred while processing the screenshot: ${error.message}`);
+  }
+});
+keith({
+  nomCom: "sscrop",
+  categorie: "screenshots",
+  reaction: "📽️"
+}, async (dest, zk, commandeOptions) => {
+  const { repondre, ms, arg } = commandeOptions;
+
+  try {
+    // Caption for the screenshot
+    const cap = `*Screenshot by Alpha Md*`;
+
+    // Check if a URL is provided
+    if (!arg[0]) {
+      return repondre('Please insert a website link to take a screenshot!');
+    }
+
+    // Construct the screenshot URL
+    const image = `https://image.thum.io/get/crop/${arg[0]}`;
+
+    // Send the screenshot image with the caption
+    await zk.sendMessage(dest, {
+      image: { url: image },
+      caption: cap
+    }, { quoted: ms });
+
+  } catch (error) {
+    // Log the error and notify the user with a formatted error message
+    console.error(error);
+    repondre(`An error occurred while processing the screenshot: ${error.message}`);
+  }
+});
+keith({
+  nomCom: "maxage",
+  categorie: "screenshots",
+  reaction: "📽️"
+}, async (dest, zk, commandeOptions) => {
+  const { repondre, ms, arg } = commandeOptions;
+
+  try {
+    // Caption for the screenshot
+    const cap = `*Screenshot by Alpha Md*`;
+
+    // Check if a URL is provided
+    if (!arg[0]) {
+      return repondre('Please insert a website link to take a screenshot!');
+    }
+
+    // Construct the screenshot URL
+    const image = `https://image.thum.io/get/maxAge/${arg[0]}`;
+
+    // Send the screenshot image with the caption
+    await zk.sendMessage(dest, {
+      image: { url: image },
+      caption: cap
+    }, { quoted: ms });
+
+  } catch (error) {
+    // Log the error and notify the user with a formatted error message
+    console.error(error);
+    repondre(`An error occurred while processing the screenshot: ${error.message}`);
+  }
+});
+keith({
+  nomCom: "jpg",
+  categorie: "screenshots",
+  reaction: "📽️"
+}, async (dest, zk, commandeOptions) => {
+  const { repondre, ms, arg } = commandeOptions;
+
+  try {
+    // Caption for the screenshot
+    const cap = `*Screenshot by Alpha Md*`;
+
+    // Check if a URL is provided
+    if (!arg[0]) {
+      return repondre('Please insert a website link to take a screenshot!');
+    }
+
+    // Construct the screenshot URL
+    const image = `https://image.thum.io/get/allowJPG/${arg[0]}`;
+
+    // Send the screenshot image with the caption
+    await zk.sendMessage(dest, {
+      image: { url: image },
+      caption: cap
+    }, { quoted: ms });
+
+  } catch (error) {
+    // Log the error and notify the user with a formatted error message
+    console.error(error);
+    repondre(`An error occurred while processing the screenshot: ${error.message}`);
+  }
+});
+keith({
+  nomCom: "png",
+  aliases: ["ss", "sshot"],
+  categorie: "screenshots",
+  reaction: "📽️"
+}, async (dest, zk, commandeOptions) => {
+  const { repondre, ms, arg } = commandeOptions;
+
+  try {
+    // Caption for the screenshot
+    const cap = `*Screenshot by Alpha Md*`;
+
+    // Check if a URL is provided
+    if (!arg[0]) {
+      return repondre('Please insert a website link to take a screenshot!');
+    }
+
+    // Construct the screenshot URL
+    const image = `https://image.thum.io/get/png/${arg[0]}`;
+
+    // Send the screenshot image with the caption
+    await zk.sendMessage(dest, {
+      image: { url: image },
+      caption: cap
+    }, { quoted: ms });
+
+  } catch (error) {
+    // Log the error and notify the user with a formatted error message
+    console.error(error);
+    repondre(`An error occurred while processing the screenshot: ${error.message}`);
+  }
+});
+keith({
+  nomCom: "noanimate",
+  categorie: "screenshots",
+  reaction: "📽️"
+}, async (dest, zk, commandeOptions) => {
+  const { repondre, ms, arg } = commandeOptions;
+
+  try {
+    // Caption for the screenshot
+    const cap = `*Screenshot by Alpha Md*`;
+
+    // Check if a URL is provided
+    if (!arg[0]) {
+      return repondre('Please insert a website link to take a screenshot!');
+    }
+
+    // Construct the screenshot URL
+    const image = `https://image.thum.io/get/noanimate/${arg[0]}`;
+
+    // Send the screenshot image with the caption
+    await zk.sendMessage(dest, {
+      image: { url: image },
+      caption: cap
+    }, { quoted: ms });
+
+  } catch (error) {
+    // Log the error and notify the user with a formatted error message
+    console.error(error);
+    repondre(`An error occurred while processing the screenshot: ${error.message}`);
+  }
+});
+keith({
+  nomCom: "wait",
+  aliases: ["ss", "sshot"],
+  categorie: "screenshots",
+  reaction: "📽️"
+}, async (dest, zk, commandeOptions) => {
+  const { repondre, ms, arg } = commandeOptions;
+
+  try {
+    // Caption for the screenshot
+    const cap = `*Screenshot by Alpha Md*`;
+
+    // Check if a URL is provided
+    if (!arg[0]) {
+      return repondre('Please insert a website link to take a screenshot!');
+    }
+
+    // Construct the screenshot URL
+    const image = `https://image.thum.io/get/wait/${arg[0]}`;
+
+    // Send the screenshot image with the caption
+    await zk.sendMessage(dest, {
+      image: { url: image },
+      caption: cap
+    }, { quoted: ms });
+
+  } catch (error) {
+    // Log the error and notify the user with a formatted error message
+    console.error(error);
+    repondre(`An error occurred while processing the screenshot: ${error.message}`);
+  }
+});
+keith({
+  nomCom: "viewportwidth",
+  aliases: ["ss", "sshot"],
+  categorie: "screenshots",
+  reaction: "📽️"
+}, async (dest, zk, commandeOptions) => {
+  const { repondre, ms, arg } = commandeOptions;
+
+  try {
+    // Caption for the screenshot
+    const cap = `*Screenshot by Alpha Md*`;
+
+    // Check if a URL is provided
+    if (!arg[0]) {
+      return repondre('Please insert a website link to take a screenshot!');
+    }
+
+    // Construct the screenshot URL
+    const image = `https://image.thum.io/get/viewportWidth/${arg[0]}`;
+
+    // Send the screenshot image with the caption
+    await zk.sendMessage(dest, {
+      image: { url: image },
+      caption: cap
+    }, { quoted: ms });
+
+  } catch (error) {
+    // Log the error and notify the user with a formatted error message
+    console.error(error);
+    repondre(`An error occurred while processing the screenshot: ${error.message}`);
+  }
+});
+keith({
+  nomCom: "iphone5",
+  categorie: "screenshots",
+  reaction: "📽️"
+}, async (dest, zk, commandeOptions) => {
+  const { repondre, ms, arg } = commandeOptions;
+
+  try {
+    // Caption for the screenshot
+    const cap = `*Screenshot by Alpha Md*`;
+
+    // Check if a URL is provided
+    if (!arg[0]) {
+      return repondre('Please insert a website link to take a screenshot!');
+    }
+
+    // Construct the screenshot URL
+    const image = `https://image.thum.io/get/iphone5/${arg[0]}`;
+
+    // Send the screenshot image with the caption
+    await zk.sendMessage(dest, {
+      image: { url: image },
+      caption: cap
+    }, { quoted: ms });
+
+  } catch (error) {
+    // Log the error and notify the user with a formatted error message
+    console.error(error);
+    repondre(`An error occurred while processing the screenshot: ${error.message}`);
+  }
+});
+keith({
+  nomCom: "iphone6",
+  aliases: ["ss", "sshot"],
+  categorie: "screenshots",
+  reaction: "📽️"
+}, async (dest, zk, commandeOptions) => {
+  const { repondre, ms, arg } = commandeOptions;
+
+  try {
+    // Caption for the screenshot
+    const cap = `*Screenshot by Alpha Md*`;
+
+    // Check if a URL is provided
+    if (!arg[0]) {
+      return repondre('Please insert a website link to take a screenshot!');
+    }
+
+    // Construct the screenshot URL
+    const image = `https://image.thum.io/get/iphone6/${arg[0]}`;
+
+    // Send the screenshot image with the caption
+    await zk.sendMessage(dest, {
+      image: { url: image },
+      caption: cap
+    }, { quoted: ms });
+
+  } catch (error) {
+    // Log the error and notify the user with a formatted error message
+    console.error(error);
+    repondre(`An error occurred while processing the screenshot: ${error.message}`);
+  }
+});
+keith({
+  nomCom: "iphone6plus",
+  categorie: "screenshots",
+  reaction: "📽️"
+}, async (dest, zk, commandeOptions) => {
+  const { repondre, ms, arg } = commandeOptions;
+
+  try {
+    // Caption for the screenshot
+    const cap = `*Screenshot by Alpha Md*`;
+
+    // Check if a URL is provided
+    if (!arg[0]) {
+      return repondre('Please insert a website link to take a screenshot!');
+    }
+
+    // Construct the screenshot URL
+    const image = `https://image.thum.io/get/iphone6plus/${arg[0]}`;
+
+    // Send the screenshot image with the caption
+    await zk.sendMessage(dest, {
+      image: { url: image },
+      caption: cap
+    }, { quoted: ms });
+
+  } catch (error) {
+    // Log the error and notify the user with a formatted error message
+    console.error(error);
+    repondre(`An error occurred while processing the screenshot: ${error.message}`);
+  }
+});
+keith({
+  nomCom: "iphoneX",
+  categorie: "screenshots",
+  reaction: "📽️"
+}, async (dest, zk, commandeOptions) => {
+  const { repondre, ms, arg } = commandeOptions;
+
+  try {
+    // Caption for the screenshot
+    const cap = `*Screenshot by Alpha Md*`;
+
+    // Check if a URL is provided
+    if (!arg[0]) {
+      return repondre('Please insert a website link to take a screenshot!');
+    }
+
+    // Construct the screenshot URL
+    const image = `https://image.thum.io/get/iphoneX/${arg[0]}`;
+
+    // Send the screenshot image with the caption
+    await zk.sendMessage(dest, {
+      image: { url: image },
+      caption: cap
+    }, { quoted: ms });
+
+  } catch (error) {
+    // Log the error and notify the user with a formatted error message
+    console.error(error);
+    repondre(`An error occurred while processing the screenshot: ${error.message}`);
+  }
+});
+keith({
+  nomCom: "iphone12pro",
+  aliases: ["ss", "sshot"],
+  categorie: "screenshots",
+  reaction: "📽️"
+}, async (dest, zk, commandeOptions) => {
+  const { repondre, ms, arg } = commandeOptions;
+
+  try {
+    // Caption for the screenshot
+    const cap = `*Screenshot by Alpha Md*`;
+
+    // Check if a URL is provided
+    if (!arg[0]) {
+      return repondre('Please insert a website link to take a screenshot!');
+    }
+
+    // Construct the screenshot URL
+    const image = `https://image.thum.io/get/iphone12pro/${arg[0]}`;
+
+    // Send the screenshot image with the caption
+    await zk.sendMessage(dest, {
+      image: { url: image },
+      caption: cap
+    }, { quoted: ms });
+
+  } catch (error) {
+    // Log the error and notify the user with a formatted error message
+    console.error(error);
+    repondre(`An error occurred while processing the screenshot: ${error.message}`);
+  }
+});
+keith({
+  nomCom: "iphone14promax",
+  aliases: ["ss", "sshot"],
+  categorie: "screenshots",
+  reaction: "📽️"
+}, async (dest, zk, commandeOptions) => {
+  const { repondre, ms, arg } = commandeOptions;
+
+  try {
+    // Caption for the screenshot
+    const cap = `*Screenshot by Alpha Md*`;
+
+    // Check if a URL is provided
+    if (!arg[0]) {
+      return repondre('Please insert a website link to take a screenshot!');
+    }
+
+    // Construct the screenshot URL
+    const image = `https://image.thum.io/get/iphone14promax/${arg[0]}`;
+
+    // Send the screenshot image with the caption
+    await zk.sendMessage(dest, {
+      image: { url: image },
+      caption: cap
+    }, { quoted: ms });
+
+  } catch (error) {
+    // Log the error and notify the user with a formatted error message
+    console.error(error);
+    repondre(`An error occurred while processing the screenshot: ${error.message}`);
+  }
+});
+keith({
+  nomCom: "galaxys5",
+  aliases: ["ss", "sshot"],
+  categorie: "screenshots",
+  reaction: "📽️"
+}, async (dest, zk, commandeOptions) => {
+  const { repondre, ms, arg } = commandeOptions;
+
+  try {
+    // Caption for the screenshot
+    const cap = `*Screenshot by Alpha Md*`;
+
+    // Check if a URL is provided
+    if (!arg[0]) {
+      return repondre('Please insert a website link to take a screenshot!');
+    }
+
+    // Construct the screenshot URL
+    const image = `https://image.thum.io/get/galaxys5/${arg[0]}`;
+
+    // Send the screenshot image with the caption
+    await zk.sendMessage(dest, {
+      image: { url: image },
+      caption: cap
+    }, { quoted: ms });
+
+  } catch (error) {
+    // Log the error and notify the user with a formatted error message
+    console.error(error);
+    repondre(`An error occurred while processing the screenshot: ${error.message}`);
+  }
+});
 keith({
   nomCom: "screenshot",
   aliases: ["ss", "sshot"],
