@@ -1,5 +1,68 @@
 const { keith } = require("../keizzah/keith");
 const ai = require('unlimited-ai');
+const fs = require('fs');
+
+keith({
+  nomCom: "deepseek",
+  aliases: ["gpt4", "ai"],
+  reaction: '⚔️',
+  categorie: "search"
+}, async (dest, zk, params) => {
+  const { repondre, arg } = params;
+  const alpha = arg.join(" ").trim();
+
+  if (!alpha) {
+    return repondre("Please provide a message.");
+  }
+
+  const text = alpha;
+
+  // Load previous conversation from store.json, if it exists
+  let conversationData = [];
+  try {
+    const rawData = fs.readFileSync('store.json');
+    conversationData = JSON.parse(rawData);
+  } catch (err) {
+    console.log('No previous conversation found, starting new one.');
+  }
+
+  try {
+    const model = 'gpt-4-turbo-2024-04-09';
+    const userMessage = { role: 'user', content: text };
+    const systemMessage = { role: 'system', content: 'You are an assistant in WhatsApp. You are called Keith. You respond to user commands.' };
+
+    // Add user input and system message to the conversation data
+    conversationData.push(userMessage);
+    conversationData.push(systemMessage);
+
+    // Get AI response from the model
+    const aiResponse = await ai.generate(model, conversationData);
+
+    // Add AI response to the conversation data
+    conversationData.push({ role: 'assistant', content: aiResponse });
+
+    // Write the updated conversation data to store.json
+    fs.writeFileSync('store.json', JSON.stringify(conversationData, null, 2));
+
+    await zk.sendMessage(dest, {
+      text: aiResponse,
+      contextInfo: {
+        externalAdReply: {
+          title: "ALPHA-MD GPT4",
+          body: `Keep learning`,
+          thumbnailUrl: "https://files.catbox.moe/palnd8.jpg", // Replace with your bot profile photo URL
+          sourceUrl: "https://whatsapp.com/channel/0029Vaan9TF9Bb62l8wpoD47", // Your channel URL
+          mediaType: 1,
+          showAdAttribution: true, // Verified badge
+        },
+      },
+    });
+
+  } catch (error) {
+    console.error("Error generating AI response:", error);
+    await repondre("Sorry, I couldn't process your request.");
+  }
+});
 
 keith({
   nomCom: "gpt",
