@@ -1,9 +1,8 @@
-// this is my shit 💀 lemme not find it in your project 
-// Thanks chatgpt 😍😍
-// reach me before copy pasting it 254748387615
-
 const { keith } = require("../keizzah/keith");
 const axios = require("axios");
+
+
+
 
 keith({ nomCom: "videologo", categorie: "modern-logo", reaction: "✋" }, async (dest, zk, commandeOptions) => {
   const { ms, repondre, arg } = commandeOptions;
@@ -90,21 +89,6 @@ keith({ nomCom: "videologo", categorie: "modern-logo", reaction: "✋" }, async 
     repondre(`Error: ${error}`);
   }
 });
-
-// Function to fetch the logo URL using axios
-const fetchLogoUrl = async (url, name) => {
-  try {
-    const response = await axios.get(`https://api-pink-venom.vercel.app/api/logo`, {
-      params: { url, name }
-    });
-    return response.data.result.download_url; // Ensure this is the correct path for the download URL in the API response
-  } catch (error) {
-    console.error("Error fetching logo:", error);
-    return null;
-  }
-};
-
-
 
 keith({ nomCom: "logo", categorie: "Search", reaction: "✋" }, async (dest, zk, commandeOptions) => {
   const { ms, repondre, arg } = commandeOptions;
