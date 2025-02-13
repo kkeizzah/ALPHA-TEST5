@@ -1030,6 +1030,29 @@ keith({
   repondre("Disappearing messages successfully turned off!");
 });
 
+keith({
+  nomCom: "poll",
+  reaction: '✨',
+  categorie: "group"
+}, async (context, message, params) => {
+  const { repondre: respond, arg, ms } = params;
+  const [question, ...options] = arg.join(" ").split('/');
+  
+  if (options.length < 2) {
+    return respond("Incorrect format. Example: poll what is 1+1/2, 3, 4");
+  }
+  
+  const pollOptions = options[0].split(',').map(option => option.trim());
+  
+  await message.sendMessage(context, {
+    poll: {
+      name: question,
+      values: pollOptions
+    }
+  });
+});
+
+
 // Disappearing Messages Setup Command
 keith({
   nomCom: 'disap',
