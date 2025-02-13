@@ -6,6 +6,56 @@ const yts = require("yt-search");
 const fs = require('fs');
 const conf = require(__dirname + '/../set');
 
+
+
+keith({
+  nomCom: "pornsearch",
+  aliases: ["videosearch", "videolist"],
+  categorie: "search",
+  reaction: "📽️"
+}, async (dest, zk, commandeOptions) => {
+  const { repondre, arg } = commandeOptions;
+
+  // Check if there is a query in the arguments
+  if (!arg || !arg[0]) {
+    return repondre('Please provide a query!');
+  }
+
+  try {
+    const searchApiUrl = `https://api.davidcyriltech.my.id/search/xvideo?text=${encodeURIComponent(arg.join(' '))}`;
+    const response = await axios.get(searchApiUrl);
+
+    // Check if response data is valid and contains search results
+    if (!response.data.success || response.data.results.length === 0) {
+      return repondre("No search results found.");
+    }
+
+    const results = response.data.results;
+    let searchMessage = `${conf.BOT} 𝐕𝐈𝐃𝐄𝐎 𝐒𝐄𝐀𝐑𝐂𝐇 𝐑𝐄𝐒𝐔𝐋𝐓𝐒\n\n`;
+
+    results.forEach((result, index) => {
+      searchMessage += `*Title:* ${result.title}\n*Duration:* ${result.duration}\n*URL:* ${result.url}\n\n`;
+    });
+
+    await zk.sendMessage(dest, {
+      text: searchMessage,
+      contextInfo: {
+        externalAdReply: {
+          title: "Video Search Results",
+          body: "Click the links to view the videos",
+          thumbnailUrl: results[0].thumbnail,
+          sourceUrl: searchApiUrl,
+          mediaType: 1,
+          showAdAttribution: true, // Verified badge
+        },
+      },
+    }, { quoted: ms });
+
+  } catch (e) {
+    repondre(`An error occurred during search: ${e.message}`);
+  }
+});
+
 keith({
   nomCom: "tiktoksearch",
   aliases: ["tiksearch", "tiktoklist"],
