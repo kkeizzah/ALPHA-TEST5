@@ -52,6 +52,7 @@ keith({
         menu += `Aliases: ${toFancyLowercaseFont(aliases)}\n`;
         menu += `Category: ${toFancyLowercaseFont(categorie)}\n`;
         menu += `Reaction: ${toFancyLowercaseFont(reaction)}\n\n`;
+        menu += `─────────────────────\n\n`;
     });
 
     // Send the formatted menu as a message
@@ -59,7 +60,7 @@ keith({
         text: menu,
         contextInfo: {
             externalAdReply: {
-                title: "𝗔𝗟𝗣𝗛𝗔-𝗠𝗗",
+                title: "𝗔𝗟𝗣𝗛𝗔-𝗠𝗗𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭",
                 body: "𝐫𝐞𝐠𝐚𝐫𝐝𝐬 𝐊𝐞𝐢𝐭𝐡𝐤𝐞𝐢𝐳𝐳𝐚𝐡",
                 thumbnailUrl: "https://telegra.ph/file/967c663a5978c545f78d6.jpg",
                 sourceUrl: "https://whatsapp.com/channel/0029Vaan9TF9Bb62l8wpoD47",
