@@ -10,6 +10,306 @@ const { facebook } = require('@mrnima/facebook-downloader');
 const conf = require(__dirname + "/../set");
 
 keith({
+  nomCom: "twitter",
+  aliases: ["xdl", "tweet"],
+  desc: "to download Twitter",
+  categorie: "Download"
+}, async (dest, zk, commandeOptions) => {
+  const { ms, repondre, arg } = commandeOptions;
+
+  const link = arg.join(' ');
+
+  if (!arg[0]) {
+    return repondre('Please insert a Twitter video link.');
+  }
+
+  try {
+    const response = await axios.get(`https://bk9.fun/download/twitter?url=${encodeURIComponent(link)}`);
+
+    if (response.data.status && response.data.BK9.HD) {
+      const videoUrl = response.data.BK9.HD;
+      const username = response.data.BK9.username;
+      const caption = response.data.BK9.caption;
+      const thumbnailUrl = response.data.BK9.thumbnail;
+
+      await zk.sendMessage(dest, {
+        image: { url: thumbnailUrl },
+        caption: `Username: ${username}\nCaption: ${caption}`,
+      }, { quoted: ms });
+
+      await zk.sendMessage(dest, {
+        video: { url: videoUrl },
+        caption: 'Twitter video downloader powered by *KEITH-TECH*',
+        gifPlayback: false
+      }, { quoted: ms });
+
+    } else {
+      repondre('Failed to retrieve video from the provided link.');
+    }
+
+  } catch (e) {
+    repondre(`An error occurred during download: ${e.message}`);
+  }
+});
+
+keith({
+  nomCom: "likee",
+  categorie: "Download"
+}, async (dest, zk, commandeOptions) => {
+  const { ms, repondre, arg } = commandeOptions;
+
+  const link = arg.join(' ');
+
+  if (!arg[0]) {
+    return repondre('Please insert a Likee video link.');
+  }
+
+  try {
+    const response = await axios.get(`https://bk9.fun/download/likee?url=${encodeURIComponent(link)}`);
+
+    if (response.data.status && response.data.BK9) {
+      const videoUrl = response.data.BK9.withoutwatermark;
+      const title = response.data.BK9.title;
+      const thumbnailUrl = response.data.BK9.thumbnail;
+
+      await zk.sendMessage(dest, {
+        image: { url: thumbnailUrl },
+        caption: `Title: ${title}`,
+      }, { quoted: ms });
+
+      await zk.sendMessage(dest, {
+        video: { url: videoUrl },
+        caption: conf.BOT,
+        gifPlayback: false
+      }, { quoted: ms });
+
+    } else {
+      repondre('Failed to retrieve video from the provided link.');
+    }
+
+  } catch (e) {
+    repondre(`An error occurred during download: ${e.message}`);
+  }
+});
+
+
+keith({
+  nomCom: "capcut",
+  categorie: "Download"
+}, async (dest, zk, commandeOptions) => {
+  const { ms, repondre, arg } = commandeOptions;
+
+  const link = arg.join(' ');
+
+  if (!arg[0]) {
+    return repondre('Please insert a CapCut video link.');
+  }
+
+  try {
+    const response = await axios.get(`https://bk9.fun/download/capcut?url=${encodeURIComponent(link)}`);
+
+    if (response.data.status && response.data.BK9) {
+      const videoUrl = response.data.BK9.video;
+      const title = response.data.BK9.title || "CapCut Video";
+      const description = response.data.BK9.description || "No description provided.";
+      const usage = response.data.BK9.usage || "No usage information provided.";
+
+      await zk.sendMessage(dest, {
+        text: `Title: ${title}\nDescription: ${description}\nUsage: ${usage}`,
+      }, { quoted: ms });
+
+      await zk.sendMessage(dest, {
+        video: { url: videoUrl },
+        caption: conf.BOT,
+        gifPlayback: false
+      }, { quoted: ms });
+
+    } else {
+      repondre('Failed to retrieve video from the provided link.');
+    }
+
+  } catch (e) {
+    repondre(`An error occurred during download: ${e.message}`);
+  }
+});
+
+
+keith({
+  nomCom: "pinterest",
+  categorie: "Download"
+}, async (dest, zk, commandeOptions) => {
+  const { ms, repondre, arg } = commandeOptions;
+
+  const link = arg.join(' ');
+
+  if (!arg[0]) {
+    return repondre('Please insert a Pinterest video link.');
+  }
+
+  try {
+    const response = await axios.get(`https://bk9.fun/download/pinterest?url=${encodeURIComponent(link)}`);
+
+    if (response.data.status && response.data.BK9) {
+      const videoUrl = response.data.BK9[0].url;
+      const imageUrl = response.data.BK9[1].url;
+
+      await zk.sendMessage(dest, {
+        image: { url: imageUrl },
+        caption: conf.BOT,
+      }, { quoted: ms });
+
+      await zk.sendMessage(dest, {
+        video: { url: videoUrl },
+        caption: conf.BOT,
+        gifPlayback: false
+      }, { quoted: ms });
+
+    } else {
+      repondre('Failed to retrieve video from the provided link.');
+    }
+
+  } catch (e) {
+    repondre(`An error occurred during download: ${e.message}`);
+  }
+});
+
+keith({
+  nomCom: "tiktok2",
+  aliases: ["tiktokdl2", "tikdl2"],
+  categorie: "Download"
+}, async (dest, zk, commandeOptions) => {
+  const { ms, repondre, arg } = commandeOptions;
+
+  const link = arg.join(' ');
+
+  if (!arg[0]) {
+    return repondre('Please insert a TikTok video link.');
+  }
+
+  try {
+    const response = await axios.get(`https://bk9.fun/download/tiktok?url=${encodeURIComponent(link)}`);
+
+    if (response.data.status && response.data.BK9) {
+      const videoUrl = response.data.BK9.BK9;
+      const description = response.data.BK9.desc;
+      const commentCount = response.data.BK9.comment_count;
+      const likesCount = response.data.BK9.likes_count;
+      const uid = response.data.BK9.uid;
+      const nickname = response.data.BK9.nickname;
+      const musicTitle = response.data.BK9.music_info.title;
+
+      await zk.sendMessage(dest, {
+        text: `Description: ${description}\nComments: ${commentCount}\nLikes: ${likesCount}\nUser ID: ${uid}\nNickname: ${nickname}\nMusic: ${musicTitle}`,
+      }, { quoted: ms });
+
+      await zk.sendMessage(dest, {
+        video: { url: videoUrl },
+        caption: conf.BOT,
+        gifPlayback: false
+      }, { quoted: ms });
+
+    } else {
+      repondre('Failed to retrieve video from the provided link.');
+    }
+
+  } catch (e) {
+    repondre(`An error occurred during download: ${e.message}`);
+  }
+});
+
+
+keith({
+  nomCom: "appvn",
+  categorie: "Download"
+}, async (dest, zk, commandeOptions) => {
+  const { ms, repondre, arg } = commandeOptions;
+
+  const link = arg.join(' ');
+
+  if (!arg[0]) {
+    return repondre('Please insert an AppVN APK link.');
+  }
+
+  try {
+    const response = await axios.get(`https://bk9.fun/download/getAppVn?url=${encodeURIComponent(link)}`);
+
+    if (response.data.status && response.data.BK9) {
+      const downloadUrl = response.data.BK9.download.url;
+      const title = response.data.BK9.about.descriptionTitle || "AppVN APK";
+      const description = response.data.BK9.about.descriptionShort || "No description provided.";
+      const latestUpdate = response.data.BK9.about.latestUpdate || "No update date provided.";
+      const fileSize = response.data.BK9.download.size || "Unknown size";
+      const ogImage = response.data.BK9.about.ogImage;
+
+      await zk.sendMessage(dest, {
+        image: { url: ogImage },
+        caption: `Title: ${title}\nDescription: ${description}\nLatest Update: ${latestUpdate}\nSize: ${fileSize}`,
+      }, { quoted: ms });
+
+      await zk.sendMessage(dest, {
+        document: { url: downloadUrl },
+        mimetype: 'application/vnd.android.package-archive',
+        fileName: `${title}.apk`,
+        caption: conf.BOT,
+      }, { quoted: ms });
+
+    } else {
+      repondre('Failed to retrieve APK from the provided link.');
+    }
+
+  } catch (e) {
+    repondre(`An error occurred during download: ${e.message}`);
+  }
+});
+
+
+keith({
+  nomCom: "porn",
+  categorie: "Download"
+}, async (dest, zk, commandeOptions) => {
+  const { ms, repondre, arg } = commandeOptions;
+
+  const videoLink = arg.join(' ');
+
+  if (!arg[0]) {
+    return repondre('Please insert a video link.');
+  }
+
+  try {
+    const response = await axios.get(`https://api.davidcyriltech.my.id/xvideo?url=${encodeURIComponent(videoLink)}`);
+
+    if (response.data.success) {
+      const title = response.data.title;
+      const thumbnail = response.data.thumbnail;
+      const downloadUrl = response.data.download_url;
+
+      await zk.sendMessage(dest, {
+        video: { url: downloadUrl },
+        caption: title,
+        contextInfo: {
+          externalAdReply: {
+            title: "Video Downloader",
+            body: title,
+            thumbnailUrl: thumbnail,
+            sourceUrl: conf.GURL,
+            mediaType: 1,
+            showAdAttribution: true, // Verified badge
+          },
+        },
+      }, { quoted: ms });
+
+    } else {
+      repondre('Failed to retrieve video from the provided link.');
+    }
+
+  } catch (e) {
+    repondre(`An error occurred during download: ${e.message}`);
+  }
+});
+
+
+
+keith({
   nomCom: 'apk',
   aliases: ['app', 'playstore'],
   reaction: '✨',
