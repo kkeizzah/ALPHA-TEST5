@@ -1,4 +1,3 @@
-
 const { keith } = require('../keizzah/keith');
 const axios = require("axios");
 const { getytlink, ytdwn } = require("../keizzah/ytdl-core");
@@ -7,8 +6,7 @@ const fs = require('fs');
 const conf = require(__dirname + '/../set');
 
 
-
-
+// Nsearch - Video Search Command
 keith({
   nomCom: "nsearch",
   aliases: ["videosearch", "videolist"],
@@ -16,7 +14,8 @@ keith({
   reaction: "📽️"
 }, async (dest, zk, commandeOptions) => {
   const { repondre, arg } = commandeOptions;
-const query = arg.join(" ");
+  const query = arg.join(" ");
+  
   // Ensure query exists
   if (!query) {
     return repondre('Please provide a search query!');
@@ -68,6 +67,8 @@ const query = arg.join(" ");
   }
 });
 
+
+// TikTok Search Command
 keith({
   nomCom: "tiktoksearch",
   aliases: ["tiksearch", "tiktoklist"],
@@ -75,7 +76,8 @@ keith({
   reaction: "📽️"
 }, async (dest, zk, commandeOptions) => {
   const { repondre, arg } = commandeOptions;
-const query = arg.join(" ");
+  const query = arg.join(" ");
+  
   // Check if there is a query in the arguments
   if (!query) {
     return repondre('Please provide a query!');
@@ -140,6 +142,8 @@ const query = arg.join(" ");
   }
 });
 
+
+// Twitter Search Command
 keith({
   nomCom: "twittersearch",
   aliases: ["xsearch", "twitterlist", "tweetsearch", "xsearch"],
@@ -147,7 +151,8 @@ keith({
   reaction: "📽️"
 }, async (dest, zk, commandeOptions) => {
   const { repondre, arg } = commandeOptions;
-const query = arg.join(" ");
+  const query = arg.join(" ");
+  
   // Ensure a query is provided in the arguments
   if (!query) {
     return repondre('Please provide a query!');
@@ -208,6 +213,7 @@ const query = arg.join(" ");
 });
 
 
+// YouTube Search Command
 keith({
   nomCom: "yts",
   categorie: "Search",
