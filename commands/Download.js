@@ -29,7 +29,7 @@ async function uploadToCatbox(filePath) {
 keith({
   nomCom: "play",
   aliases: ["song", "playdoc", "audio", "mp3"],
-  categorie: "Search",
+  categorie: "download",
   reaction: "🎥"
 }, async (dest, zk, commandOptions) => {
   const { arg, ms, repondre } = commandOptions;
@@ -151,7 +151,7 @@ keith({
 keith({
   nomCom: "video",
   aliases: ["videodoc", "film", "mp4"],
-  categorie: "Search",
+  categorie: "download",
   reaction: "🎥"
 }, async (dest, zk, commandOptions) => {
   const { arg, ms, repondre } = commandOptions;
@@ -258,7 +258,7 @@ keith({
 // Command to upload image, video, or audio file
 keith({
   'nomCom': 'url',       // Command to trigger the function
-  'categorie': "General", // Command category
+  'categorie': "download", // Command category
   'reaction': '👨🏿‍💻'    // Reaction to use on command
 }, async (groupId, client, context) => {
   const { msgRepondu, repondre } = context;
