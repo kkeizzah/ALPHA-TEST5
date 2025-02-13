@@ -4,6 +4,7 @@ const axios = require('axios');
 const fs = require('fs-extra');
 const { mediafireDl } = require("../keizzah/dl/Function");
 const { igdl } = require("ruhend-scraper");
+const getFBInfo = require("@xaviabot/fb-downloader");
 const { downloadTiktok } = require('@mrnima/tiktok-downloader');
 const { facebook } = require('@mrnima/facebook-downloader');  
 const conf = require(__dirname + "/../set");
@@ -503,6 +504,36 @@ keith({
     await repondre("Unable to fetch download link, try matching exact song name or with artist name.");
   }
 });
+keith({
+  nomCom: "fbdl2",
+  aliases: ["fb2", "facebook2"],
+  desc: "to download Facebook video",
+  categorie: "download",
+  reaction: "📽️"
+}, async (dest, zk, commandeOptions) => {
+  const { repondre, ms, arg } = commandeOptions;
+
+  if (!arg[0]) {
+    return repondre('Insert a public Facebook video link!');
+  }
+
+  const queryURL = arg.join(" ");
+
+  try {
+    const result = await getFBInfo(queryURL);
+    let caption = `
+    Title: ${result.title}
+    Link: ${result.url}
+    `;
+    await zk.sendMessage(dest, { image: { url: result.thumbnail }, caption: caption }, { quoted: ms });
+    await zk.sendMessage(dest, { video: { url: result.hd }, caption: 'Facebook video downloader powered by *${conf.BOT}*' }, { quoted: ms });
+
+  } catch (error) {
+    console.error('Error:', error);
+    repondre('Try fbdl3 on the link');
+  }
+});
+
 
 
 
