@@ -8,51 +8,63 @@ const conf = require(__dirname + '/../set');
 
 
 
+
 keith({
-  nomCom: "pornsearch",
+  nomCom: "nsearch",
   aliases: ["videosearch", "videolist"],
   categorie: "search",
   reaction: "📽️"
 }, async (dest, zk, commandeOptions) => {
   const { repondre, arg } = commandeOptions;
 
-  // Check if there is a query in the arguments
+  // Ensure query exists
   if (!arg || !arg[0]) {
-    return repondre('Please provide a query!');
+    return repondre('Please provide a search query!');
   }
 
   try {
+    // Define Video search API URL
     const searchApiUrl = `https://api.davidcyriltech.my.id/search/xvideo?text=${encodeURIComponent(arg.join(' '))}`;
     const response = await axios.get(searchApiUrl);
 
     // Check if response data is valid and contains search results
-    if (!response.data.success || response.data.results.length === 0) {
+    const results = response.data.results;
+    if (!results || results.length === 0) {
       return repondre("No search results found.");
     }
 
-    const results = response.data.results;
+    // Prepare search result message
     let searchMessage = `${conf.BOT} 𝐕𝐈𝐃𝐄𝐎 𝐒𝐄𝐀𝐑𝐂𝐇 𝐑𝐄𝐒𝐔𝐋𝐓𝐒\n\n`;
 
     results.forEach((result, index) => {
-      searchMessage += `*Title:* ${result.title}\n*Duration:* ${result.duration}\n*URL:* ${result.url}\n\n`;
+      searchMessage += `*┃${index + 1}.* ${result.title}\n`;
+      searchMessage += `*┃Duration*: ${result.duration || "Unknown"}\n`;
+      searchMessage += `*┃URL*: ${result.url}\n`;
+      searchMessage += `───────────────────◆\n\n`;
     });
 
+    // Get the thumbnail for the first result, or a default if missing
+    const thumbnailUrl = results[0]?.thumbnail || conf.URL;
+
+    // Send the video search result message
     await zk.sendMessage(dest, {
       text: searchMessage,
       contextInfo: {
         externalAdReply: {
           title: "Video Search Results",
           body: "Click the links to view the videos",
-          thumbnailUrl: results[0].thumbnail,
-          sourceUrl: searchApiUrl,
+          thumbnailUrl: thumbnailUrl,
+          sourceUrl: conf.GURL,
           mediaType: 1,
           showAdAttribution: true, // Verified badge
         },
       },
-    }, { quoted: ms });
+    });
 
-  } catch (e) {
-    repondre(`An error occurred during search: ${e.message}`);
+  } catch (error) {
+    // Log error and respond with message
+    console.error(error); // Log the error for debugging
+    repondre(`Error occurred: ${error.message || 'Something went wrong.'}`);
   }
 });
 
