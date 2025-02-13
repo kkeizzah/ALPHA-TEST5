@@ -338,7 +338,7 @@ function react(dest, zk, msg, reaction) {
 }
 
 
-keith({
+/*keith({
   nomCom: 'update',
   aliases: ['redeploy', 'sync'],
   categorie: "system"
@@ -391,7 +391,7 @@ keith({
 
   // Trigger the redeployment function
   redeployApp();
-});
+});*/
 
 keith({
   nomCom: "fetch",
