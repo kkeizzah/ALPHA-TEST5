@@ -6,7 +6,7 @@ keith({
   nomCom: "deepseek",
   aliases: ["gpt4", "ai"],
   reaction: '⚔️',
-  categorie: "search"
+  categorie: "AI"
 }, async (dest, zk, params) => {
   const { repondre, arg } = params;
   const alpha = arg.join(" ").trim();
@@ -68,7 +68,7 @@ keith({
   nomCom: "gpt",
   aliases: ["gpt4", "ai"],
   reaction: '⚔️',
-  categorie: "search"
+  categorie: "AI"
 }, async (dest, zk, params) => {
   const { repondre, arg } = params;  // Use args for the command arguments
   const alpha = arg.join(" ").trim(); // Assuming args is an array of command parts
@@ -113,7 +113,7 @@ keith({
   nomCom: "gemini",
   aliases: ["gpto4", "gemni", "gpt2", "gpt3"],
   reaction: '⚔️',
-  categorie: "search"
+  categorie: "AI"
 }, async (dest, zk, params) => {
   const { repondre, arg } = params;
   const elementQuery = arg.join(" ").trim(); // Use 'arg' to capture the user query
