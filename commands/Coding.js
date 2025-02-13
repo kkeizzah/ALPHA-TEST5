@@ -1,8 +1,383 @@
 
 const cheerio = require('cheerio');
 const { keith } = require("../keizzah/keith");
+const JavaScriptObfuscator = require("javascript-obfuscator");
+const { c, cpp, node, python, java } = require('compile-run');
+const { dBinary, eBinary } = require("../keizzah/binary");
 const { default: axios } = require("axios");
 const { mediafireDl } = require("../keizzah/dl/Function");
+keith({
+  'nomCom': "run-c++",
+  'aliases': ["c++", "runc++"],
+  'categorie': "Coding"
+}, async (message, args, context) => {
+  const {
+    ms: messageSentTime,
+    arg: commandArguments,
+    repondre: reply,
+    auteurMessage: messageAuthor,
+    nomAuteurMessage: authorName,
+    msgRepondu: repliedMessage,
+    auteurMsgRepondu: repliedMessageAuthor
+  } = context;
+  try {
+    // Check if the user provided a valid code
+    if (!commandArguments[0]) {
+      return reply("Quote a valid and short C++ code to compile.");
+    }
+
+    // Join the command arguments into a single code string
+    let code = commandArguments.join(" ");
+
+    // Compile and run the C++ code
+    let result = await cpp.runSource(code);
+
+    // Handle result
+    if (result.error) {
+      reply(`Error: ${result.error}`);
+    } else {
+      reply(`Output:\n${result.stdout}`);
+      if (result.stderr) {
+        reply(`Error Output:\n${result.stderr}`);
+      }
+    }
+  } catch (err) {
+    // Handle unexpected errors
+    console.error(err);
+    reply("An error occurred while trying to run the code.");
+  }
+});
+keith({
+  'nomCom': "run-c",
+  'aliases': ["runcc", "runc"],
+  'categorie': "Coding"
+}, async (message, args, context) => {
+  const {
+    ms: messageSentTime,
+    arg: commandArguments,
+    repondre: reply,
+    auteurMessage: messageAuthor,
+    nomAuteurMessage: authorName,
+    msgRepondu: repliedMessage,
+    auteurMsgRepondu: repliedMessageAuthor
+  } = context;
+  try {
+    // Check if the user provided a valid code
+    if (!commandArguments[0]) {
+      return reply("Quote a valid and short C code to compile.");
+    }
+
+    // Join the command arguments into a single code string
+    let code = commandArguments.join(" ");
+
+    // Compile and run the C++ code
+    let result = await c.runSource(code);
+
+    // Handle result
+    if (result.error) {
+      reply(`Error: ${result.error}`);
+    } else {
+      reply(`Output:\n${result.stdout}`);
+      if (result.stderr) {
+        reply(`Error Output:\n${result.stderr}`);
+      }
+    }
+  } catch (err) {
+    // Handle unexpected errors
+    console.error(err);
+    reply("An error occurred while trying to run the code.");
+  }
+});
+keith({
+  'nomCom': "run-java",
+  'aliases': ["java", "runjava"],
+  'categorie': "Coding"
+}, async (message, args, context) => {
+  const {
+    ms: messageSentTime,
+    arg: commandArguments,
+    repondre: reply,
+    auteurMessage: messageAuthor,
+    nomAuteurMessage: authorName,
+    msgRepondu: repliedMessage,
+    auteurMsgRepondu: repliedMessageAuthor
+  } = context;
+  try {
+    // Check if the user provided a valid code
+    if (!commandArguments[0]) {
+      return reply("Quote a valid and short java code to compile.");
+    }
+
+    // Join the command arguments into a single code string
+    let code = commandArguments.join(" ");
+
+    // Compile and run the C++ code
+    let result = await java.runSource(code);
+
+    // Handle result
+    if (result.error) {
+      reply(`Error: ${result.error}`);
+    } else {
+      reply(`Output:\n${result.stdout}`);
+      if (result.stderr) {
+        reply(`Error Output:\n${result.stderr}`);
+      }
+    }
+  } catch (err) {
+    // Handle unexpected errors
+    console.error(err);
+    reply("An error occurred while trying to run the code.");
+  }
+});
+keith({
+  'nomCom': "run-js",
+  'aliases': ["node", "javascript"],
+  'categorie': "Coding"
+}, async (message, args, context) => {
+  const {
+    ms: messageSentTime,
+    arg: commandArguments,
+    repondre: reply,
+    auteurMessage: messageAuthor,
+    nomAuteurMessage: authorName,
+    msgRepondu: repliedMessage,
+    auteurMsgRepondu: repliedMessageAuthor
+  } = context;
+  try {
+    // Check if the user provided a valid code
+    if (!commandArguments[0]) {
+      return reply("Quote a valid and short javascript code to compile.");
+    }
+
+    // Join the command arguments into a single code string
+    let code = commandArguments.join(" ");
+
+    // Compile and run the C++ code
+    let result = await node.runSource(code);
+
+    // Handle result
+    if (result.error) {
+      reply(`Error: ${result.error}`);
+    } else {
+      reply(`Output:\n${result.stdout}`);
+      if (result.stderr) {
+        reply(`Error Output:\n${result.stderr}`);
+      }
+    }
+  } catch (err) {
+    // Handle unexpected errors
+    console.error(err);
+    reply("An error occurred while trying to run the code.");
+  }
+});
+keith({
+  'nomCom': "run-py",
+  'aliases': ["python", "runpy"],
+  'categorie': "Coding"
+}, async (message, args, context) => {
+  const {
+    ms: messageSentTime,
+    arg: commandArguments,
+    repondre: reply,
+    auteurMessage: messageAuthor,
+    nomAuteurMessage: authorName,
+    msgRepondu: repliedMessage,
+    auteurMsgRepondu: repliedMessageAuthor
+  } = context;
+  try {
+    // Check if the user provided a valid code
+    if (!commandArguments[0]) {
+      return reply("Quote a valid and short python code to compile.");
+    }
+
+    // Join the command arguments into a single code string
+    let code = commandArguments.join(" ");
+
+    // Compile and run the C++ code
+    let result = await python.runSource(code);
+
+    // Handle result
+    if (result.error) {
+      reply(`Error: ${result.error}`);
+    } else {
+      reply(`Output:\n${result.stdout}`);
+      if (result.stderr) {
+        reply(`Error Output:\n${result.stderr}`);
+      }
+    }
+  } catch (err) {
+    // Handle unexpected errors
+    console.error(err);
+    reply("An error occurred while trying to run the code.");
+  }
+});
+keith({
+  'nomCom': "debinary",
+  // Command name
+  'aliases': ["decode", "decodebinary"],
+  // Aliases for the command
+  'categorie': "Coding" // Category of the command
+}, async (zk, args, context) => {
+  const {
+    ms,
+    repondre
+  } = context;
+
+  // Get the text (argument) provided after the command
+  const text = args.join(" ").trim();
+
+  // If no text is provided after the command, send an error message
+  if (!text) {
+    return repondre('Please provide a text to decode.');
+  }
+  // Extract the basePath from the input text (if needed)
+  const basePath = text.split(/^[\\/!#.]/)[0] || '/';
+
+  // Check if the text starts with a valid condition
+  const isPathStartsWithCondition = text.slice(basePath.length).trim().split(' ')[0]?.toLowerCase();
+  const possibleKeys = ['Please pro', 'decode text to video'];
+
+  // If the decoded key matches any of the valid keys, proceed with decoding
+  if (possibleKeys.includes(isPathStartsWithCondition)) {
+    // Extract the key for decoding the binary data
+    const decodedKey = text.slice(basePath.length + isPathStartsWithCondition.length).trim();
+    if (!decodedKey) {
+      return repondre('Invalid decoding request.');
+    }
+    try {
+      // Decode the binary data asynchronously using dBinary
+      const decodedData = await dBinary(decodedKey);
+      repondre(decodedData);
+    } catch (error) {
+      repondre('An error occurred while decoding the data.');
+    }
+  } else {
+    repondre('Invalid decoding request.');
+  }
+});
+keith({
+  'nomCom': "ebinary",
+  // Command name
+  'aliases': ["encode", "encodebinary"],
+  // Aliases for the command
+  'categorie': "Coding" // Category of the command
+}, async (zk, args, context) => {
+  const {
+    ms,
+    repondre
+  } = context;
+
+  // Get the text (argument) provided after the command
+  const text = args.join(" ").trim(); // Use `args` instead of `ms.body`
+
+  // If no text is provided after the command, send an error message
+  if (!text) {
+    repondre('Please provide a text to encode.');
+    return;
+  }
+
+  // Attempt to encode the text in binary
+  try {
+    let encodedResult = await eBinary(text); // Encode the text to binary
+
+    // Send the encoded result back to the user
+    repondre(encodedResult);
+  } catch (error) {
+    // If an error occurs during encoding, send an error message
+    repondre('Error encoding the text to binary.');
+  }
+});
+keith({
+  'nomCom': "encrypt",
+  'aliases': ["enc", "obfuscate", "obfu"],
+  'categorie': "Coding"
+}, async (message, args, context) => {
+  const {
+    ms: messageSentTime,
+    arg: commandArguments,
+    repondre: reply,
+    auteurMessage: messageAuthor,
+    nomAuteurMessage: authorName,
+    msgRepondu: repliedMessage,
+    auteurMsgRepondu: repliedMessageAuthor
+  } = context;
+  try {
+    // Join the command arguments into a single string
+    let codeToObfuscate = commandArguments.join(" ");
+
+    // Check if there's no code provided to obfuscate
+    if (!commandArguments[0]) {
+      reply("After the command, provide a valid JavaScript code for encryption.");
+      return;
+    }
+
+    // Obfuscate the JavaScript code with specific options
+    const obfuscatedCode = JavaScriptObfuscator.obfuscate(codeToObfuscate, {
+      'compact': true,
+      'controlFlowFlattening': true,
+      'controlFlowFlatteningThreshold': 0.1,
+      'numbersToExpressions': true,
+      'simplify': true,
+      'stringArrayShuffle': true,
+      'splitStrings': true,
+      'stringArrayThreshold': 0.1
+    });
+
+    // Send back the obfuscated code
+    await reply(obfuscatedCode.getObfuscatedCode());
+  } catch (error) {
+    // In case of any errors, notify the user
+    reply("Something went wrong. Please check if your code is logical and has the correct syntax.");
+  }
+});
+
+keith({
+  'nomCom': "carbon",
+  'aliases': ["C", "run-carbon"],
+  'categorie': "Coding"
+}, async (zk, args, context) => {
+  const { ms, repondre } = context;
+
+  try {
+    // Ensure that the user has provided code to compile
+    if (!args || args.length === 0) {
+      return repondre("Please provide a valid and short Carbon code to compile.");
+    }
+
+    // Join the arguments into a single code string
+    let code = args.join(" ");
+
+    // Send the request to the Carbonara API to generate the image
+    try {
+      const response = await axios.post('https://carbonara.solopov.dev/api/cook', {
+        code: code,
+        backgroundColor: '#1F816D', // You can change the background color here
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      // Check if the API response is valid
+      if (response.status !== 200) {
+        return repondre('API failed to fetch a valid response.');
+      }
+
+      // Get the image buffer from the response (response.data is base64 encoded)
+      const imageBuffer = Buffer.from(response.data, 'base64');
+
+      // Send the generated image as a message
+      const caption = "Downloaded by Alpha Md";
+      await zk.sendMessage(ms, { image: imageBuffer, caption: caption }, { quoted: ms });
+    } catch (error) {
+      return repondre("An error occurred while processing your request.\n" + error.message);
+    }
+  } catch (error) {
+    return repondre('An unexpected error occurred: ' + error.message);
+  }
+});
+
+
 
 keith({
   nomCom: "scrap",
