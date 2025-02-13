@@ -217,7 +217,7 @@ keith({
   nomCom: "shell",
   aliases: ["getcmd", "cmd"],
   reaction: '⚔️',
-  categorie: "system"
+  categorie: "coding"
 }, async (context, message, params) => {
   const { repondre: sendResponse, arg: commandArgs, superUser: Owner, auteurMessage } = params;
 
@@ -396,7 +396,7 @@ keith({
 keith({
   nomCom: "fetch",
   aliases: ["get", "find"],
-  categorie: "system",
+  categorie: "coding",
   reaction: '🛄',
 }, async (sender, zk, context) => {
   const { repondre: sendResponse, arg: args } = context;
