@@ -721,7 +721,7 @@ keith({
 keith({
   'nomCom': "lulcat",
   'reaction': '📡',
-  'categorie': 'AI'
+  'categorie': 'images'
 }, async (user, message, context) => {
   const { repondre: sendMessage, arg, ms } = context;
   try {
