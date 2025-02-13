@@ -390,7 +390,7 @@ keith({
   nomCom: "github",
   aliases: ["git"],
   reaction: '💻',
-  categorie: "Search"
+  categorie: "stalker"
 }, async (dest, zk, commandeOptions) => {
   const { repondre, arg, ms } = commandeOptions;
   const githubUsername = arg.join(" ");
@@ -572,7 +572,7 @@ keith({
 
 🔗 *URL*: ${con.content_urls.mobile.page}
 
-> Powered by Alpha Md
+> Powered by Alpha
     `;
     repondre(texa);
   } catch (err) {
@@ -580,4 +580,3 @@ keith({
     repondre(`Got 404. I did not find anything!`);
   }
 });
-
