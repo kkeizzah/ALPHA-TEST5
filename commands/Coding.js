@@ -5,6 +5,7 @@ const JavaScriptObfuscator = require("javascript-obfuscator");
 const { c, cpp, node, python, java } = require('compile-run');
 const { dBinary, eBinary } = require("../keizzah/binary");
 const { default: axios } = require("axios");
+const { writeFile } = require("fs/promises");
 const { mediafireDl } = require("../keizzah/dl/Function");
 keith({
   'nomCom': "run-c++",
