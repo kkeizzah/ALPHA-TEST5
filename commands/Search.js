@@ -16,15 +16,15 @@ keith({
   reaction: "📽️"
 }, async (dest, zk, commandeOptions) => {
   const { repondre, arg } = commandeOptions;
-
+const query = arg.join(" ");
   // Ensure query exists
-  if (!arg || !arg[0]) {
+  if (!query) {
     return repondre('Please provide a search query!');
   }
 
   try {
     // Define Video search API URL
-    const searchApiUrl = `https://api.davidcyriltech.my.id/search/xvideo?text=${encodeURIComponent(arg.join(' '))}`;
+    const searchApiUrl = `https://api.davidcyriltech.my.id/search/xvideo?text=${encodeURIComponent(query)}`;
     const response = await axios.get(searchApiUrl);
 
     // Check if response data is valid and contains search results
@@ -75,15 +75,15 @@ keith({
   reaction: "📽️"
 }, async (dest, zk, commandeOptions) => {
   const { repondre, arg } = commandeOptions;
-
+const query = arg.join(" ");
   // Check if there is a query in the arguments
-  if (!arg || !arg[0]) {
+  if (!query) {
     return repondre('Please provide a query!');
   }
 
   try {
     // URL for the TikTok search API
-    const searchApiUrl = `https://apis-starlights-team.koyeb.app/starlight/tiktoksearch?text=${encodeURIComponent(arg.join(' '))}`;
+    const searchApiUrl = `https://apis-starlights-team.koyeb.app/starlight/tiktoksearch?text=${encodeURIComponent(query)}`;
     const response = await axios.get(searchApiUrl);
 
     // Check if response data is valid and contains search results
@@ -147,15 +147,15 @@ keith({
   reaction: "📽️"
 }, async (dest, zk, commandeOptions) => {
   const { repondre, arg } = commandeOptions;
-
+const query = arg.join(" ");
   // Ensure a query is provided in the arguments
-  if (!arg || !arg[0]) {
+  if (!query) {
     return repondre('Please provide a query!');
   }
 
   try {
     // Define the search API URL
-    const searchApiUrl = `https://apis-starlights-team.koyeb.app/starlight/Twitter-Posts?text=${encodeURIComponent(arg.join(' '))}`;
+    const searchApiUrl = `https://apis-starlights-team.koyeb.app/starlight/Twitter-Posts?text=${encodeURIComponent(query)}`;
     const response = await axios.get(searchApiUrl);
     const searchData = response.data.result;  // Assuming 'result' contains an array of tweets
 
