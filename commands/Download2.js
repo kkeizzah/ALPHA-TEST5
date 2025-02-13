@@ -193,7 +193,7 @@ keith({
   } catch (error) {
     // Catch and log any errors
     console.error(error);
-    return repondre("An error occurred while processing the request. Please try again later.");
+    return repondre("An error occurred while processing the request.Try igdl2 using this link.");
   }
 });
 
@@ -420,7 +420,7 @@ keith({
     });
   } catch (error) {
     console.error(error);
-    repondre('An error occurred: ' + error.message);
+    repondre('An error occurred .Kindly try tiktok2 using this link: ' + error.message);
   }
 });
 
