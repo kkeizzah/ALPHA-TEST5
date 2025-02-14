@@ -12,63 +12,77 @@ const fs = require('fs-extra');
 const moment = require("moment-timezone");
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
+
 keith({
   nomCom: 'post',
-  aliase: 'status',
+  aliases: ['status', 'poststatus'],
   categorie: "Group",
   reaction: '⚪'
 }, async (dest, zk, context) => {
-  const { arg, repondre, superUser, msgRepondu } = context;
+  const { arg, repondre, superUser, nomAuteurMessage, ms, msgRepondu } = context;
 
-  // Check if there is a message to quote
   if (!msgRepondu) {
-    return repondre("Please mention an image, video, or audio to quote.");
+    return repondre("Please mention an image, video, or audio.");
   }
 
-  // Only allow broadcasting from status (to avoid misuse)
-  if (!msgRepondu.key || msgRepondu.key.remoteJid !== "status@broadcast") {
-    return repondre("This can only be used for status messages.");
+  if (!superUser) {
+    return repondre("Only for my owner.");
   }
 
-  // Check if caption argument is provided
   if (!arg[0]) {
     return repondre("Provide a caption to broadcast your status.");
   }
 
-  // Ensure only the superUser can use the command
-  if (!superUser) {
-    return repondre("This command is only for the owner.");
+  let mediaMessage;
+  let mediaType;
+  
+  // Check the type of the mentioned media message and download it
+  try {
+    if (msgRepondu.imageMessage) {
+      mediaType = 'image';
+      mediaMessage = await downloadMediaMessage(msgRepondu.imageMessage);
+    } else if (msgRepondu.videoMessage) {
+      mediaType = 'video';
+      mediaMessage = await downloadMediaMessage(msgRepondu.videoMessage);
+    } else if (msgRepondu.stickerMessage) {
+      mediaType = 'sticker';
+      mediaMessage = await downloadMediaMessage(msgRepondu.stickerMessage);
+    } else if (msgRepondu.audioMessage) {
+      mediaType = 'audio';
+      mediaMessage = await downloadMediaMessage(msgRepondu.audioMessage);
+    } else {
+      return repondre("Unsupported media type.");
+    }
+  } catch (error) {
+    return repondre(`Error downloading media: ${error.message}`);
   }
 
-  // Notify that broadcasting is in progress
-  await repondre("*ALPHA-MD is sending your status...💀*");
-
+  // Save the downloaded media file
+  const mediaPath = `./temp/${moment().format('YYYYMMDD_HHmmss')}_${mediaType}`;
   try {
-    // Handle different types of media
-    if (msgRepondu.imageMessage) {
-      const media = await downloadMediaMessage(msgRepondu, 'image');
-      await zk.sendStatus(dest, media, { caption: arg.join(' ') });
-    } 
-    else if (msgRepondu.videoMessage) {
-      const media = await downloadMediaMessage(msgRepondu, 'video');
-      await zk.sendStatus(dest, media, { caption: arg.join(' ') });
-    } 
-    else if (msgRepondu.stickerMessage) {
-      const media = await downloadMediaMessage(msgRepondu, 'sticker');
-      await zk.sendStatus(dest, media, { caption: arg.join(' ') });
-    } 
-    else if (msgRepondu.audioMessage) {
-      const media = await downloadMediaMessage(msgRepondu, 'audio');
-      await zk.sendStatus(dest, media, { caption: arg.join(' ') });
-    }
-
-    // Inform the user that the status has been posted
-    return repondre("Your status has been posted successfully!");
+    await writeFile(mediaPath, mediaMessage);
   } catch (error) {
-    console.error("Error broadcasting status:", error);
-    return repondre("There was an error posting your status. Please try again.");
+    return repondre(`Error saving media: ${error.message}`);
+  }
+
+  // Post the media to status
+  try {
+    await zk.sendMessage("status@broadcast", {
+      [mediaType]: { url: mediaPath },
+      caption: arg.join(' ')
+    });
+
+    // Cleanup: delete the temporary media file
+    await fs.remove(mediaPath);
+
+    // Notify the user that the status was posted successfully
+    await repondre("Status posted successfully!");
+
+  } catch (error) {
+    return repondre(`Error posting status: ${error.message}`);
   }
 });
+
 
 keith({
   nomCom: 'report',
