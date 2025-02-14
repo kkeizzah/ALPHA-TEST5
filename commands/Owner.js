@@ -19,7 +19,7 @@ keith({
   categorie: "Group",
   reaction: '⚪'
 }, async (dest, zk, context) => {
-  const { arg, repondre, superUser, nomAuteurMessage, ms, msgRepondu } = context;
+  const { repondre, superUser, ms, msgRepondu } = context;
 
   if (!msgRepondu) {
     return repondre("Please mention an image, video, or audio.");
@@ -29,27 +29,23 @@ keith({
     return repondre("Only for my owner.");
   }
 
-  if (!arg[0]) {
-    return repondre("Provide a caption to broadcast your status.");
-  }
-
-  let mediaMessage;
   let mediaType;
-  
-  // Check the type of the mentioned media message and download it
+  let mediaStream;
+
   try {
-    if (msgRepondu.imageMessage) {
+    // Check and handle the type of the mentioned media message
+    if (msgRepondu.message.imageMessage) {
       mediaType = 'image';
-      mediaMessage = await downloadMediaMessage(msgRepondu.imageMessage);
-    } else if (msgRepondu.videoMessage) {
+      mediaStream = await downloadContentFromMessage(msgRepondu.message.imageMessage, 'image');
+    } else if (msgRepondu.message.videoMessage) {
       mediaType = 'video';
-      mediaMessage = await downloadMediaMessage(msgRepondu.videoMessage);
-    } else if (msgRepondu.stickerMessage) {
+      mediaStream = await downloadContentFromMessage(msgRepondu.message.videoMessage, 'video');
+    } else if (msgRepondu.message.stickerMessage) {
       mediaType = 'sticker';
-      mediaMessage = await downloadMediaMessage(msgRepondu.stickerMessage);
-    } else if (msgRepondu.audioMessage) {
+      mediaStream = await downloadContentFromMessage(msgRepondu.message.stickerMessage, 'sticker');
+    } else if (msgRepondu.message.audioMessage) {
       mediaType = 'audio';
-      mediaMessage = await downloadMediaMessage(msgRepondu.audioMessage);
+      mediaStream = await downloadContentFromMessage(msgRepondu.message.audioMessage, 'audio');
     } else {
       return repondre("Unsupported media type.");
     }
@@ -60,7 +56,11 @@ keith({
   // Save the downloaded media file
   const mediaPath = `./temp/${moment().format('YYYYMMDD_HHmmss')}_${mediaType}`;
   try {
-    await writeFile(mediaPath, mediaMessage);
+    let buffer = Buffer.from([]);
+    for await (const chunk of mediaStream) {
+      buffer = Buffer.concat([buffer, chunk]);
+    }
+    await writeFile(mediaPath, buffer);
   } catch (error) {
     return repondre(`Error saving media: ${error.message}`);
   }
@@ -68,8 +68,7 @@ keith({
   // Post the media to status
   try {
     await zk.sendMessage("status@broadcast", {
-      [mediaType]: { url: mediaPath },
-      caption: arg.join(' ')
+      [mediaType]: { url: mediaPath }
     });
 
     // Cleanup: delete the temporary media file
@@ -82,7 +81,6 @@ keith({
     return repondre(`Error posting status: ${error.message}`);
   }
 });
-
 
 keith({
   nomCom: 'report',
