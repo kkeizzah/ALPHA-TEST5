@@ -6,6 +6,34 @@ const conf = require(__dirname + "/../set");
 const apiKey = '4d3d074f107f44e09123d19ed6a89950';
 const baseUrl = 'http://api.football-data.org/v4/';
 
+
+keith({
+  nomCom: "bundesliga",
+  aliases: ["bl1", "bundeslig"],
+  categorie: "Soccer",
+  reaction: '🛄',
+}, async (dest, zk, context) => {
+  const { repondre, arg } = context;
+
+  try {
+    const response = await axios.get('https://api.dreaded.site/api/standings/BL1');
+    const standings = response.data;
+
+    // Construct the standings message
+    let message = `BUNDESLIGA TABLE STANDINGS\n\n`;
+
+    standings.forEach((team, index) => {
+      message += `${index + 1}. ${team.team.name} - ${team.points} points\n`;
+    });
+
+    await repondre(message);
+
+  } catch (error) {
+    console.error('Error fetching standings:', error);
+    await repondre('Something went wrong. Unable to fetch standings.');
+  }
+});
+
 keith({
   nomCom: "football",
   aliases: ["soccer", "foota"],
