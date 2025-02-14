@@ -8,6 +8,115 @@ const baseUrl = 'http://api.football-data.org/v4/';
 
 
 keith({
+  nomCom: "serie-a",
+  aliases: ["bl1", "bundeslig"],
+  categorie: "Soccer",
+  reaction: '🛄',
+}, async (dest, zk, context) => {
+  const { repondre, arg } = context;
+
+  try {
+    const response = await axios.get('https://api.dreaded.site/api/standings/SA');
+    const standings = response.data;
+
+    // Construct the standings message
+    let message = `SERIE A TABLE STANDINGS\n\n`;
+
+    standings.forEach((team, index) => {
+      message += `${index + 1}. ${team.team.name} - ${team.points} points\n`;
+    });
+
+    await repondre(message);
+
+  } catch (error) {
+    console.error('Error fetching standings:', error);
+    await repondre('Something went wrong. Unable to fetch standings.');
+  }
+});
+
+keith({
+  nomCom: "laliga",
+  aliases: ["bl1", "bundeslig"],
+  categorie: "Soccer",
+  reaction: '🛄',
+}, async (dest, zk, context) => {
+  const { repondre, arg } = context;
+
+  try {
+    const response = await axios.get('https://api.dreaded.site/api/standings/PD');
+    const standings = response.data;
+
+    // Construct the standings message
+    let message = `LALIGA TABLE STANDINGS\n\n`;
+
+    standings.forEach((team, index) => {
+      message += `${index + 1}. ${team.team.name} - ${team.points} points\n`;
+    });
+
+    await repondre(message);
+
+  } catch (error) {
+    console.error('Error fetching standings:', error);
+    await repondre('Something went wrong. Unable to fetch standings.');
+  }
+});
+
+keith({
+  nomCom: "ligue1",
+  aliases: ["bl1", "bundeslig"],
+  categorie: "Soccer",
+  reaction: '🛄',
+}, async (dest, zk, context) => {
+  const { repondre, arg } = context;
+
+  try {
+    const response = await axios.get('https://api.dreaded.site/api/standings/FL1');
+    const standings = response.data;
+
+    // Construct the standings message
+    let message = `LIGUE1 TABLE STANDINGS\n\n`;
+
+    standings.forEach((team, index) => {
+      message += `${index + 1}. ${team.team.name} - ${team.points} points\n`;
+    });
+
+    await repondre(message);
+
+  } catch (error) {
+    console.error('Error fetching standings:', error);
+    await repondre('Something went wrong. Unable to fetch standings.');
+  }
+});
+
+keith({
+  nomCom: "epl",
+  aliases: ["leaguep", "premie"],
+  categorie: "Soccer",
+  reaction: '🛄',
+}, async (dest, zk, context) => {
+  const { repondre, arg } = context;
+
+  try {
+    const response = await axios.get('https://api.dreaded.site/api/standings/PL');
+    const standings = response.data;
+
+    // Construct the standings message
+    let message = `EPL TABLE STANDINGS\n\n`;
+
+    standings.forEach((team, index) => {
+      message += `${index + 1}. ${team.team.name} - ${team.points} points\n`;
+    });
+
+    await repondre(message);
+
+  } catch (error) {
+    console.error('Error fetching standings:', error);
+    await repondre('Something went wrong. Unable to fetch standings.');
+  }
+});
+
+
+keith({
   nomCom: "bundesliga",
   aliases: ["bl1", "bundeslig"],
   categorie: "Soccer",
