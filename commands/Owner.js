@@ -96,24 +96,34 @@ keith({
   desc: "to generate profile picture",
   categorie: "owner"
 }, async (dest, zk, commandeOptions) => {
-  const { ms, arg, repondre, auteurMessage, nomAuteurMessage, msgRepondu, auteurMsgRepondu } = commandeOptions;
+  const { arg, repondre, superUser } = commandeOptions;
   const text = arg.join(" ");
+  
+  console.log('Received text:', text); // Debugging line
 
   if (!text) {
+    console.log('No name provided');
     await repondre("Please provide a name to update your profile name.");
     return;
   }
 
+  if (!superUser) {
+    console.log('User is not authorized');
+    await repondre("Only the owner can update the profile name.");
+    return;
+  }
+
   try {
-    // Attempt to update the profile name
-    await zk.updateProfileName(text); 
+    console.log('Attempting to update profile name...');
+    await zk.updateProfileName(text); // Assuming updateProfileName is the correct function
+    console.log('Profile name updated');
     await repondre("Your name has been updated successfully ✅");
   } catch (error) {
-    // Catch errors and log them
     console.error('Error updating profile name:', error);
     await repondre("There was an error updating your profile name. Please try again later.");
   }
 });
+
 
 keith({
   nomCom: 'report',
