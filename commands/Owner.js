@@ -88,6 +88,33 @@ keith({
     return repondre(`Error posting status: ${error.message}`);
   }
 });
+
+
+keith({
+  nomCom: "myname",
+  aliases: ["pp", "whois"],
+  desc: "to generate profile picture",
+  categorie: "owner"
+}, async (dest, zk, commandeOptions) => {
+  const { ms, arg, repondre, auteurMessage, nomAuteurMessage, msgRepondu, auteurMsgRepondu } = commandeOptions;
+  const text = arg.join(" ");
+
+  if (!text) {
+    await repondre("Please provide a name to update your profile name.");
+    return;
+  }
+
+  try {
+    // Attempt to update the profile name
+    await zk.updateProfileName(text); 
+    await repondre("Your name has been updated successfully ✅");
+  } catch (error) {
+    // Catch errors and log them
+    console.error('Error updating profile name:', error);
+    await repondre("There was an error updating your profile name. Please try again later.");
+  }
+});
+
 keith({
   nomCom: 'report',
   aliases: 'spread',
