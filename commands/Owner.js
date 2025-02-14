@@ -14,7 +14,7 @@ const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 keith({
   nomCom: 'post',
-  aliase: 'spread',
+  aliase: 'status',
   categorie: "Group",
   reaction: '⚪'
 }, async (dest, zk, context) => {
