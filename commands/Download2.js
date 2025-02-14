@@ -174,8 +174,8 @@ keith({
 });
 
 keith({
-  nomCom: "tiktok2",
-  aliases: ["tiktokdl2", "tikdl2"],
+  nomCom: "tiktok",
+  aliases: ["tiktokdl2", "tikdl"],
   categorie: "Download"
 }, async (dest, zk, commandeOptions) => {
   const { ms, repondre, arg } = commandeOptions;
@@ -498,8 +498,8 @@ keith({
 });
 
 keith({
-  nomCom: "facebook",
-  aliases: ["fbdl", "facebookdl", "fb"],
+  nomCom: "facebook2",
+  aliases: ["fbdl2", "facebookdl2", "fb2"],
   categorie: "Download",
   reaction: "📽️"
 }, async (dest, zk, commandeOptions) => {
@@ -636,8 +636,8 @@ keith({
 });
 
 keith({
-  nomCom: "tiktok",
-  aliases: ["tikdl", "tiktokdl"],
+  nomCom: "tiktok2",
+  aliases: ["tikdl2", "tiktokdl2"],
   categorie: "Download",
   reaction: "📽️"
 }, async (dest, zk, commandeOptions) => {
@@ -805,8 +805,8 @@ keith({
   }
 });
 keith({
-  nomCom: "fbdl2",
-  aliases: ["fb2", "facebook2"],
+  nomCom: "fbdl",
+  aliases: ["fb", "facebook"],
   desc: "to download Facebook video",
   categorie: "download",
   reaction: "📽️"
@@ -826,7 +826,7 @@ keith({
     Link: ${result.url}
     `;
     await zk.sendMessage(dest, { image: { url: result.thumbnail }, caption: caption }, { quoted: ms });
-    await zk.sendMessage(dest, { video: { url: result.hd }, caption: 'Facebook video downloader powered by *${conf.BOT}*' }, { quoted: ms });
+    await zk.sendMessage(dest, { video: { url: result.hd }, caption: 'downloaded successfully' }, { quoted: ms });
 
   } catch (error) {
     console.error('Error:', error);
