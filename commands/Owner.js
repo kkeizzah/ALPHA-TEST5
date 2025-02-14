@@ -13,6 +13,64 @@ const moment = require("moment-timezone");
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 keith({
+  nomCom: 'post',
+  aliase: 'spread',
+  categorie: "Group",
+  reaction: '⚪'
+}, async (dest, zk, context) => {
+  const { arg, repondre, superUser, msgRepondu } = context;
+
+  // Check if there is a message to quote
+  if (!msgRepondu) {
+    return repondre("Please mention an image, video, or audio to quote.");
+  }
+
+  // Only allow broadcasting from status (to avoid misuse)
+  if (!msgRepondu.key || msgRepondu.key.remoteJid !== "status@broadcast") {
+    return repondre("This can only be used for status messages.");
+  }
+
+  // Check if caption argument is provided
+  if (!arg[0]) {
+    return repondre("Provide a caption to broadcast your status.");
+  }
+
+  // Ensure only the superUser can use the command
+  if (!superUser) {
+    return repondre("This command is only for the owner.");
+  }
+
+  // Notify that broadcasting is in progress
+  await repondre("*ALPHA-MD is sending your status...💀*");
+
+  try {
+    // Handle different types of media
+    if (msgRepondu.imageMessage) {
+      const media = await downloadMediaMessage(msgRepondu, 'image');
+      await zk.sendStatus(dest, media, { caption: arg.join(' ') });
+    } 
+    else if (msgRepondu.videoMessage) {
+      const media = await downloadMediaMessage(msgRepondu, 'video');
+      await zk.sendStatus(dest, media, { caption: arg.join(' ') });
+    } 
+    else if (msgRepondu.stickerMessage) {
+      const media = await downloadMediaMessage(msgRepondu, 'sticker');
+      await zk.sendStatus(dest, media, { caption: arg.join(' ') });
+    } 
+    else if (msgRepondu.audioMessage) {
+      const media = await downloadMediaMessage(msgRepondu, 'audio');
+      await zk.sendStatus(dest, media, { caption: arg.join(' ') });
+    }
+
+    // Inform the user that the status has been posted
+    return repondre("Your status has been posted successfully!");
+  } catch (error) {
+    console.error("Error broadcasting status:", error);
+    return repondre("There was an error posting your status. Please try again.");
+  }
+});
+
+keith({
   nomCom: 'report',
   aliases: 'spread',
   categorie: "owner",
