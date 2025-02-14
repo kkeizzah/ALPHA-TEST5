@@ -7,11 +7,10 @@ const { isGroupBanned, addGroupToBanList, removeGroupFromBanList } = require("..
 const { isGroupOnlyAdmin, addGroupToOnlyAdminList, removeGroupFromOnlyAdminList } = require("../bdd/onlyAdmin");
 const { removeSudoNumber, addSudoNumber, issudo, isSudoTableNotEmpty } = require("../bdd/sudo");
 const { exec } = require('child_process');
-const { writeFile } = require("fs/promises");
+const { writeFile, mkdir } = require("fs/promises");
 const fs = require('fs-extra');
 const moment = require("moment-timezone");
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
 
 keith({
   nomCom: 'post',
@@ -34,18 +33,18 @@ keith({
 
   try {
     // Check and handle the type of the mentioned media message
-    if (msgRepondu.message.imageMessage) {
+    if (msgRepondu.imageMessage) {
       mediaType = 'image';
-      mediaStream = await downloadContentFromMessage(msgRepondu.message.imageMessage, 'image');
-    } else if (msgRepondu.message.videoMessage) {
+      mediaStream = await downloadContentFromMessage(msgRepondu.imageMessage, 'image');
+    } else if (msgRepondu.videoMessage) {
       mediaType = 'video';
-      mediaStream = await downloadContentFromMessage(msgRepondu.message.videoMessage, 'video');
-    } else if (msgRepondu.message.stickerMessage) {
+      mediaStream = await downloadContentFromMessage(msgRepondu.videoMessage, 'video');
+    } else if (msgRepondu.stickerMessage) {
       mediaType = 'sticker';
-      mediaStream = await downloadContentFromMessage(msgRepondu.message.stickerMessage, 'sticker');
-    } else if (msgRepondu.message.audioMessage) {
+      mediaStream = await downloadContentFromMessage(msgRepondu.stickerMessage, 'sticker');
+    } else if (msgRepondu.audioMessage) {
       mediaType = 'audio';
-      mediaStream = await downloadContentFromMessage(msgRepondu.message.audioMessage, 'audio');
+      mediaStream = await downloadContentFromMessage(msgRepondu.audioMessage, 'audio');
     } else {
       return repondre("Unsupported media type.");
     }
@@ -53,8 +52,16 @@ keith({
     return repondre(`Error downloading media: ${error.message}`);
   }
 
+  // Ensure the temp directory exists
+  const tempDir = './temp';
+  try {
+    await fs.ensureDir(tempDir);
+  } catch (error) {
+    return repondre(`Error creating temp directory: ${error.message}`);
+  }
+
   // Save the downloaded media file
-  const mediaPath = `./temp/${moment().format('YYYYMMDD_HHmmss')}_${mediaType}`;
+  const mediaPath = path.join(tempDir, `${moment().format('YYYYMMDD_HHmmss')}_${mediaType}.${mediaType === 'sticker' ? 'webp' : mediaType}`);
   try {
     let buffer = Buffer.from([]);
     for await (const chunk of mediaStream) {
@@ -72,7 +79,7 @@ keith({
     });
 
     // Cleanup: delete the temporary media file
-    await fs.remove(mediaPath);
+    await fs.unlink(mediaPath);
 
     // Notify the user that the status was posted successfully
     await repondre("Status posted successfully!");
@@ -81,7 +88,6 @@ keith({
     return repondre(`Error posting status: ${error.message}`);
   }
 });
-
 keith({
   nomCom: 'report',
   aliases: 'spread',
