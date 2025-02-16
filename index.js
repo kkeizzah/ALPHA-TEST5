@@ -39,7 +39,7 @@ let fs = require("fs-extra");
 let path = require("path");
 const { DateTime } = require('luxon');
 const FileType = require('file-type');
-const handleAntiDelete = require("./vars/antidelete");
+
 const { Sticker, createSticker, StickerTypes } = require('wa-sticker-formatter');
 //import chalk from 'chalk'
 const { verifierEtatJid , recupererActionJid } = require("./bdd/antilien");
@@ -164,10 +164,7 @@ zk.ev.on("call", async callData => {
     }
   }
 });
-                zk.ev.on("messages.upsert", async m => {
-  await handleAntiDelete(zk, conf, m);
-});
-        
+                
 
 
         
