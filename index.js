@@ -478,7 +478,8 @@ function mybotpic() {
       }
             
 // Track the last text time to prevent overflow
-let lastTextTime = 0;
+
+/*let lastTextTime = 0;
 const messageDelay = 5000; // Set the minimum delay between messages (in milliseconds)
 
 if (origineMessage !== auteurMessage && conf.CHATBOT === 'yes') {
@@ -647,7 +648,7 @@ if (badWords.some(word => texte.includes(word)) && !superUser && origineMessage 
   if (conf.AUTO_BLOCK !== 'yes') {
     console.log('Auto-block is not enabled.');
   }
-}
+}*/
             if (ms.key && ms.key.remoteJid === 'status@broadcast' && conf.AUTO_STATUS_REPLY === "yes") {
   const user = ms.key.participant;
   const text = `${conf.AUTO_STATUS_MSG}`;
