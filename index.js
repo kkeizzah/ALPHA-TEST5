@@ -52,9 +52,9 @@ const {isGroupOnlyAdmin,addGroupToOnlyAdminList,removeGroupFromOnlyAdminList} = 
 let { reagir } = require(__dirname + "/keizzah/app");
 var session = conf.session.replace(/ALPHA-MD;;;=>/g,"");
 const prefixe = conf.PREFIXE;
-const express = require("express");
+/*const express = require("express");
 const app = express();
-const port = process.env.PORT || 9090;
+const port = process.env.PORT || 9090;*/
 
 // Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
@@ -1352,7 +1352,7 @@ ${metadata.desc}`;
                         }
                     }
                 }
-                app.get("/", (req, res) => {
+                /*app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, 'keizzah', 'index.html'));
 });
 
@@ -1368,7 +1368,7 @@ app.listen(port, () => {
                     }, timeout);
                 }
             });
-        }
+        }*/
 
 
 
