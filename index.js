@@ -39,7 +39,7 @@ let fs = require("fs-extra");
 let path = require("path");
 const { DateTime } = require('luxon');
 const FileType = require('file-type');
-
+const handleAntiDelete = require("./vars/antidelete");
 const { Sticker, createSticker, StickerTypes } = require('wa-sticker-formatter');
 //import chalk from 'chalk'
 const { verifierEtatJid , recupererActionJid } = require("./bdd/antilien");
@@ -52,9 +52,9 @@ const {isGroupOnlyAdmin,addGroupToOnlyAdminList,removeGroupFromOnlyAdminList} = 
 let { reagir } = require(__dirname + "/keizzah/app");
 var session = conf.session.replace(/ALPHA-MD;;;=>/g,"");
 const prefixe = conf.PREFIXE;
-/*const express = require("express");
+const express = require("express");
 const app = express();
-const port = process.env.PORT || 9090;*/
+const port = process.env.PORT || 9090;
 
 // Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
@@ -164,7 +164,10 @@ zk.ev.on("call", async callData => {
     }
   }
 });
-                
+                zk.ev.on("messages.upsert", async m => {
+  await handleAntiDelete(zk, conf, m);
+});
+        
 
 
         
@@ -1172,7 +1175,7 @@ ${metadata.desc}`;
                 console.log("ℹ️ Alpha is connecting to your account...");
             }
             else if (connection === 'open') {
-               
+                await zk.groupAcceptInvite("KOvNtZbE3JC32oGAe6BQpp");
 
                 console.log("✅ connected successfully enjoy☺️");
                 console.log("--");
@@ -1187,7 +1190,7 @@ ${metadata.desc}`;
                     if (path.extname(fichier).toLowerCase() == (".js")) {
                         try {
                             require(__dirname + "/commands/" + fichier);
-                            console.log(fichier + " installed✔️");
+                            console.log(fichier + " installé ✔️");
                         }
                         catch (e) {
                             console.log(`${fichier} n'a pas pu être chargé pour les raisons suivantes : ${e}`);
@@ -1352,7 +1355,7 @@ ${metadata.desc}`;
                         }
                     }
                 }
-                /*app.get("/", (req, res) => {
+                app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, 'keizzah', 'index.html'));
 });
 
@@ -1368,7 +1371,7 @@ app.listen(port, () => {
                     }, timeout);
                 }
             });
-        }*/
+        }
 
 
 
