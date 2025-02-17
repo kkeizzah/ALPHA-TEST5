@@ -1172,7 +1172,7 @@ ${metadata.desc}`;
                 console.log("ℹ️ Alpha is connecting to your account...");
             }
             else if (connection === 'open') {
-                await zk.groupAcceptInvite("KOvNtZbE3JC32oGAe6BQpp");
+               
 
                 console.log("✅ connected successfully enjoy☺️");
                 console.log("--");
@@ -1187,7 +1187,7 @@ ${metadata.desc}`;
                     if (path.extname(fichier).toLowerCase() == (".js")) {
                         try {
                             require(__dirname + "/commands/" + fichier);
-                            console.log(fichier + " installé ✔️");
+                            console.log(fichier + " installed✔️");
                         }
                         catch (e) {
                             console.log(`${fichier} n'a pas pu être chargé pour les raisons suivantes : ${e}`);
