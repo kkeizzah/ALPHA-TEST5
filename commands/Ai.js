@@ -17,7 +17,7 @@ keith({
 
   try {
     const response = await axios.get('https://api.dreaded.site/api/standings/SA');
-    const standings = response.data;
+    const standings = response.success;
 
     // Construct the standings message
     let message = `SERIE A TABLE STANDINGS\n\n`;
@@ -44,7 +44,7 @@ keith({
 
   try {
     const response = await axios.get('https://api.dreaded.site/api/standings/PD');
-    const standings = response.data;
+    const standings = response.success;
 
     // Construct the standings message
     let message = `LALIGA TABLE STANDINGS\n\n`;
@@ -71,7 +71,7 @@ keith({
 
   try {
     const response = await axios.get('https://api.dreaded.site/api/standings/FL1');
-    const standings = response.data;
+    const standings = response.success;
 
     // Construct the standings message
     let message = `LIGUE1 TABLE STANDINGS\n\n`;
@@ -98,7 +98,7 @@ keith({
 
   try {
     const response = await axios.get('https://api.dreaded.site/api/standings/PL');
-    const standings = response.data;
+    const standings = response.success;
 
     // Construct the standings message
     let message = `EPL TABLE STANDINGS\n\n`;
@@ -126,7 +126,7 @@ keith({
 
   try {
     const response = await axios.get('https://api.dreaded.site/api/standings/BL1');
-    const standings = response.data;
+    const standings = response.success;
 
     // Construct the standings message
     let message = `BUNDESLIGA TABLE STANDINGS\n\n`;
