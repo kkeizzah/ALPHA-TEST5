@@ -339,7 +339,7 @@ keith({
         await repondre("Video has been successfully converted to audio.");
       } catch (error) {
         console.error("Error converting video to audio:", error);
-        await repondre("Failed to convert video to audio. Please try again.");
+        await repondre("Failed to convert video to audio. Please try again." + error );
       }
     } else {
       await repondre("Please reply to a video message to convert it to audio.");
