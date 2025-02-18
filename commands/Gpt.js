@@ -1,7 +1,7 @@
 const { keith } = require("../keizzah/keith");
 const ai = require('unlimited-ai');
 const fs = require('fs');
-
+const conf = require(__dirname + "/../set");
 
 
 keith({
