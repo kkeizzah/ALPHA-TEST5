@@ -3,6 +3,54 @@ const { keith } = require('../keizzah/keith');
 const axios = require('axios');
 const conf = require(__dirname + "/../set");
 const { dare, truth, random_question, amount_of_questions } = require('../database/truth-dare.js');
+
+keith({
+  nomCom: "currency",
+  aliases: ["💲", "💵"],
+  categorie: "trade",
+  reaction: '🛄',
+}, async (sender, zk, context) => {
+  const { repondre, arg } = context;
+  const text = arg.join(" ");
+
+  // Check if the text is empty or invalid
+  if (!text) {
+    return repondre('Example usage: currency 100 USD to EUR');
+  }
+
+  // Extract amount, fromCurrency, and toCurrency from the text
+  const [amount, fromCurrency, toCurrency] = text.split(" ");
+
+  if (!amount || !fromCurrency || !toCurrency) {
+    return repondre('Example usage: currency 100 USD to EUR');
+  }
+
+  const convertCurrency = async (amount, fromCurrency, toCurrency) => {
+    try {
+      // Build the request URL
+      const url = `https://api.davidcyriltech.my.id/tools/convert?amount=${amount}&from=${fromCurrency}&to=${toCurrency}`;
+
+      // Fetch conversion data using axios
+      const response = await axios.get(url);
+      const data = response.data;
+
+      // Check if the response is successful
+      if (data && data.success) {
+        return data.result;
+      } else {
+        throw new Error('Failed to retrieve conversion data.');
+      }
+    } catch (error) {
+      console.error('Error converting currency:', error);
+      return 'Something went wrong. Unable to fetch conversion data.';
+    }
+  };
+
+  // Convert the currency and send the result
+  const result = await convertCurrency(amount, fromCurrency, toCurrency);
+  await repondre(result);
+});
+
 keith({
   nomCom: "advice",
   aliases: ["wisdom", "wise"],
