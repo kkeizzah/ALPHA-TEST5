@@ -7,6 +7,77 @@ const apiKey = '4d3d074f107f44e09123d19ed6a89950';
 const baseUrl = 'http://api.football-data.org/v4/';
 
 
+
+const fetchStandings = async (league, leagueName, zk, context) => {
+  const { repondre } = context;
+
+  try {
+    const response = await axios.get(`https://api.dreaded.site/api/standings/${league}`);
+    const data = response.data;
+
+    if (data && data.success) {
+      // Use the data from the API response directly
+      const standings = data.data.split('\n');
+      // Construct the standings message
+      let message = `${leagueName} TABLE STANDINGS\n\n`;
+      standings.forEach(team => {
+        message += `${team}\n`;
+      });
+      await repondre(message);
+    } else {
+      throw new Error('No response content found.');
+    }
+  } catch (error) {
+    console.error(`Error fetching ${leagueName} standings:`, error);
+    await repondre('Something went wrong. Unable to fetch standings.');
+  }
+};
+
+keith({
+  nomCom: "serie-a",
+  aliases: ["bl1", "bundeslig"],
+  categorie: "Soccer",
+  reaction: '🛄',
+}, (dest, zk, context) => {
+  fetchStandings('SA', 'SERIE A', zk, context);
+});
+
+keith({
+  nomCom: "laliga",
+  aliases: ["bl1", "bundeslig"],
+  categorie: "Soccer",
+  reaction: '🛄',
+}, (dest, zk, context) => {
+  fetchStandings('PD', 'LALIGA', zk, context);
+});
+
+keith({
+  nomCom: "ligue1",
+  aliases: ["bl1", "bundeslig"],
+  categorie: "Soccer",
+  reaction: '🛄',
+}, (dest, zk, context) => {
+  fetchStandings('FL1', 'LIGUE1', zk, context);
+});
+
+keith({
+  nomCom: "epl",
+  aliases: ["leaguep", "premie"],
+  categorie: "Soccer",
+  reaction: '🛄',
+}, (dest, zk, context) => {
+  fetchStandings('PL', 'EPL', zk, context);
+});
+
+keith({
+  nomCom: "bundesliga",
+  aliases: ["bl1", "bundeslig"],
+  categorie: "Soccer",
+  reaction: '🛄',
+}, (dest, zk, context) => {
+  fetchStandings('BL1', 'BUNDESLIGA', zk, context);
+});
+
 keith({
   nomCom: "football",
   aliases: ["soccer", "foota"],
