@@ -4,6 +4,7 @@ const ytSearch = require('yt-search');
 const conf = require(__dirname + '/../set');
 const { Catbox } = require("node-catbox");
 const fs = require('fs-extra');
+const { toAudio } = require("../keizzah/converter");
 const { downloadAndSaveMediaMessage } = require('@whiskeysockets/baileys');
 
 // Initialize Catbox
@@ -25,6 +26,7 @@ async function uploadToCatbox(filePath) {
     throw new Error(String(error));
   }
 }
+
 // Define the command with aliases for play
 keith({
   nomCom: "play",
@@ -309,3 +311,41 @@ else if (msgRepondu.documentMessage) {
     repondre("Oops, there was an error.");
   }
 });
+
+
+keith({
+  nomCom: "toaudio",
+  aliases: ["convertaudio", "audioconvert"],
+  reaction: '⚔️',
+  categorie: "download"
+}, async (dest, zk, commandeOptions) => {
+  const { repondre, msgRepondu, auteurMessage, arg } = commandeOptions;
+  
+  if (msgRepondu) {
+    
+    if (msgRepondu.videoMessage) {
+      try {
+        // Download and save the video
+        let media = await zk.downloadAndSaveMediaMessage(msgRepondu.videoMessage);
+
+        let audioBuffer = await toAudio(media, 'mp4');
+
+    
+        await zk.sendMessage(dest, {
+          audio: audioBuffer,
+          mimetype: 'audio/mp3'
+        }, { quoted: msgRepondu });
+
+        await repondre("Video has been successfully converted to audio.");
+      } catch (error) {
+        console.error("Error converting video to audio:", error);
+        await repondre("Failed to convert video to audio. Please try again.");
+      }
+    } else {
+      await repondre("Please reply to a video message to convert it to audio.");
+    }
+  } else {
+    await repondre("Please reply to a video message to convert it to audio.");
+  }
+});
+
