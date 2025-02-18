@@ -73,7 +73,7 @@ keith({
 });
 
 keith({
-  nomCom: "ilama",
+  nomCom: "gpt",
   aliases: ["ilamaa", "ilamaai"],
   reaction: '⚔️',
   categorie: "AI"
@@ -91,7 +91,7 @@ keith({
 });
 
 keith({
-  nomCom: "gpt",
+  nomCom: "ilama",
   aliases: ["gpt4", "ai"],
   reaction: '⚔️',
   categorie: "AI"
