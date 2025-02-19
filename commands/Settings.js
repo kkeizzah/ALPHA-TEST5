@@ -72,7 +72,7 @@ keith({
 
 keith({
   nomCom: "timezone",
-  aliases: ["time", "date"],
+  aliases: ["timee", "datee"],
   desc: "Check the current local time and date for a specified timezone.",
   categorie: "tools",
   reaction: '🕒',
