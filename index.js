@@ -166,9 +166,9 @@ zk.ev.on("call", async callData => {
         // Function to format notification message
 function createNotification(deletedMessage) {
   const deletedBy = deletedMessage.key.participant || deletedMessage.key.remoteJid;
-  return `*😈ALPHA ANTIDELETE👿*\n\n` +
+  return `*😈 ${conf.BOT} ANTIDELETE👿*\n\n` +
     `*Time deleted🥀:* ${new Date().toLocaleString()}\n` +
-    `*Deleted by🌷:* @${deletedBy.split('@')[0]}\n\n*powered by Keithkeizzah*\n\n`;
+    `*Deleted by🌷:* @${deletedBy.split('@')[0]}\n\n*powered by ${conf.OWNER_NAME}*\n\n`;
 }
 
 // Helper function to download media based on message type
