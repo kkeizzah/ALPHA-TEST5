@@ -3,7 +3,7 @@ const ai = require('unlimited-ai');
 const axios = require('axios'); // Added missing axios import
 const fs = require('fs');
 const conf = require(__dirname + "/../set");
-const { uploadtoimgur } = require("../keizzah/Imgur"); // Ensure this path and export are correct
+const { uploadtoimgur } = require("../keizzah/imgur"); // Ensure this path and export are correct
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 keith({
