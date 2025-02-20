@@ -117,13 +117,13 @@ keith({
 
     // Check if the text is empty or invalid
     if (!text) {
-      repondre(`You need to provide a message for the ${selectedOption.nom} setting.`);
+      repondre(`*You need to provide a message for the ${selectedOption.nom} setting.*`);
       return;
     }
 
     // Update the setting with the provided message
     await updateHerokuConfigVar(selectedOption.nom, text);
-    repondre(`The setting '${selectedOption.nom}' has been updated: '${text}'`);
+    repondre(`*The setting '${selectedOption.nom}' has been updated: '${text}'*`);
     return;
   } else {
     // Default toggle for yes/no
@@ -132,7 +132,7 @@ keith({
 
   // Update the selected variable to the new state
   await updateHerokuConfigVar(selectedOption.nom, newState);
-  repondre(`The Heroku variable '${selectedOption.nom}' has been updated to '${newState}'. The bot is restarting...`);
+  repondre(`*The Heroku variable '${selectedOption.nom}' has been updated to '${newState}'. The bot is restarting...*`);
 });
 
 // Function to update a setting in Heroku
