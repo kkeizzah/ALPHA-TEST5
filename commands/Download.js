@@ -1,8 +1,7 @@
 const { keith } = require("../keizzah/keith");
 const axios = require('axios');
 const ytSearch = require('yt-search');
-const conf = require(__dirname + '/../set');
-const { Catbox } = require("node-catbox");
+const conf = require(__dirname + '/../set');const { Catbox } = require("node-catbox");
 const fs = require('fs-extra');
 const { toAudio } = require("../keizzah/converter");
 const { downloadAndSaveMediaMessage } = require('@whiskeysockets/baileys');
@@ -28,6 +27,8 @@ async function uploadToCatbox(filePath) {
 }
 
 // Define the command with aliases for play
+
+
 keith({
   nomCom: "play",
   aliases: ["song", "playdoc", "audio", "mp3"],
@@ -55,39 +56,18 @@ keith({
     const firstVideo = searchResults.videos[0];
     const videoUrl = firstVideo.url;
 
-    // Function to get download data from APIs
-    const getDownloadData = async (url) => {
-      try {
-        const response = await axios.get(url);
-        return response.data;
-      } catch (error) {
-        console.error('Error fetching data from API:', error);
-        return { success: false };
-      }
-    };
-
-    // List of APIs to try
-    const apis = [
-      `https://api-rin-tohsaka.vercel.app/download/ytmp4?url=${encodeURIComponent(videoUrl)}`,
-      `https://api.davidcyriltech.my.id/download/ytmp3?url=${encodeURIComponent(videoUrl)}`,
-      `https://www.dark-yasiya-api.site/download/ytmp3?url=${encodeURIComponent(videoUrl)}`,
-      `https://api.giftedtech.web.id/api/download/dlmp3?url=${encodeURIComponent(videoUrl)}&apikey=gifted-md`,
-      `https://api.dreaded.site/api/ytdl/audio?url=${encodeURIComponent(videoUrl)}`
-    ];
-
-    let downloadData;
-    for (const api of apis) {
-      downloadData = await getDownloadData(api);
-      if (downloadData && downloadData.success) break;
-    }
+    // Fetch download data from the provided API
+    const apiUrl = `https://bk9.fun/download/youtube?url=${encodeURIComponent(videoUrl)}`;
+    const response = await axios.get(apiUrl);
+    const downloadData = response.data;
 
     // Check if a valid download URL was found
-    if (!downloadData || !downloadData.success) {
-      return repondre('Failed to retrieve download URL from all sources. Please try again later.');
+    if (!downloadData || !downloadData.BK9 || !downloadData.BK9.BK8 || !downloadData.BK9.BK8.length) {
+      return repondre('Failed to retrieve download URL from the source. Please try again later.');
     }
 
-    const downloadUrl = downloadData.result.download_url;
-    const videoDetails = downloadData.result;
+    const downloadUrl = downloadData.BK9.BK8[0].link;
+    const videoDetails = downloadData.BK9;
 
     // Prepare the message payload with external ad details
     const messagePayloads = [
@@ -149,7 +129,6 @@ keith({
   }
 });
 
-// Define the command with aliases for video
 keith({
   nomCom: "video",
   aliases: ["videodoc", "film", "mp4"],
