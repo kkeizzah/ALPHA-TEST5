@@ -586,7 +586,7 @@ if (origineMessage !== auteurMessage && conf.CHATBOT === 'yes') {
   } catch (error) {
     console.error('Error fetching chatbot response:', error);
   }
-}
+}*/
             
 
 
@@ -660,7 +660,7 @@ if (!superUser && origineMessage === auteurMessage && conf.CHATBOT_INBOX === 'ye
 
 
 
-if (origineMessage !== auteurMessage && conf.VOICE_CHATBOT === 'yes') {
+/*if (origineMessage !== auteurMessage && conf.VOICE_CHATBOT === 'yes') {
   try {
     const currentTime = Date.now();
     if (currentTime - lastTextTime < messageDelay) {
@@ -694,7 +694,7 @@ if (origineMessage !== auteurMessage && conf.VOICE_CHATBOT === 'yes') {
   } catch (error) {
     console.error('Error fetching chatbot response:', error);
   }
-}
+}*/
             
 
 const badWords = ['stupid', 'idiot', 'fool', 'dumb', 'jerk']; // Add more bad words as needed
