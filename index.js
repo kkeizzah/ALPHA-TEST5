@@ -507,7 +507,8 @@ function mybotpic() {
             
 
             var commandeOptions = {
-                superUser, dev,
+                superUser, 
+                dev,
                 verifGroupe,
                 mbre,
                 membreGroupe,
@@ -587,10 +588,7 @@ if (origineMessage !== auteurMessage && conf.CHATBOT === 'yes') {
     console.error('Error fetching chatbot response:', error);
   }
 }*/
-            
-
-
-if (!superUser && origineMessage === auteurMessage && conf.CHATBOT_INBOX === 'yes') {
+            if (!superUser && origineMessage === auteurMessage && conf.CHATBOT_INBOX === 'yes') {
   try {
     const currentTime = Date.now();
     if (currentTime - lastTextTime < messageDelay) {
@@ -599,17 +597,17 @@ if (!superUser && origineMessage === auteurMessage && conf.CHATBOT_INBOX === 'ye
     }
 
     // Fetch chatbot response using axios
-    const response = await axios.get('https://api.davidcyriltech.my.id/ai/gpt4', {
+    const response = await axios.get('https://bk9.fun/ai/blackbox', {
       params: {
-        text: texte
+        q: texte
       }
     });
 
     const keith = response.data;
 
-    if (keith && keith.success && keith.message) {
+    if (keith && keith.status && keith.BK9) {
       await zk.sendMessage(origineMessage, {
-        text: keith.message
+        text: keith.BK9
       });
       lastTextTime = Date.now(); // Update the last message time
     } else {
@@ -619,7 +617,10 @@ if (!superUser && origineMessage === auteurMessage && conf.CHATBOT_INBOX === 'ye
     console.error('Error fetching chatbot response:', error);
   }
 }
-         
+            
+
+
+
             if (! superUser && origineMessage == auteurMessage && conf.VOICE_CHATBOT_INBOX === 'yes') {
   try {
     const currentTime = Date.now();
